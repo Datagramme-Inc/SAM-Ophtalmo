@@ -1,0 +1,16 @@
+export const REGIONS_SENEGAL = [
+  "Dakar",
+  "Diourbel",
+  "Fatick",
+  "Kaffrine",
+  "Kaolack",
+  "Kédougou",
+  "Kolda",
+  "Louga",
+  "Matam",
+  "Saint-Louis",
+  "Sédhiou",
+  "Tambacounda",
+  "Thiès",
+  "Ziguinchor",
+];
