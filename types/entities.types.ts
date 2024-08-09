@@ -27,8 +27,8 @@ export interface AdminPrincipal {
   nom: string;
   prenom: string;
   role: Grade;
-  date_creation?: Date;
-  date_modification?: Date;
+  date_creation: Date;
+  date_modification: Date;
 }
 
 // Medecin
@@ -41,8 +41,8 @@ export interface Medecin {
   service: string;
   telephone: string;
   confirmer_telephone: string;
-  date_creation?: Date;
-  date_modification?: Date;
+  date_creation: Date;
+  date_modification: Date;
 }
 
 // Auxiliaire
@@ -55,8 +55,8 @@ export interface Auxiliaire {
   code: string;
   telephone: string;
   confirmer_telephone: string;
-  date_creation?: Date;
-  date_modification?: Date;
+  date_creation: Date;
+  date_modification: Date;
 }
 
 // Sexe
@@ -79,60 +79,60 @@ export interface Patient {
   profession: string;
   telephone: string;
   confirmer_telephone: string;
-  observation?: string;
-  pas_glaucome_reevaluation?: boolean;
-  risque_glaucome_examens?: boolean;
-  gpao?: boolean;
-  date_creation?: Date;
-  date_modification?: Date;
+  observation: string;
+  pas_glaucome_reevaluation: boolean;
+  risque_glaucome_examens: boolean;
+  gpao: boolean;
+  date_creation: Date;
+  date_modification: Date;
 }
 
 // Antecedents Personnels
 export interface AntecedentsPersonnels {
   id: number;
   patient_id: number;
-  HTA?: boolean;
-  diabete?: boolean;
-  drepanocytose?: boolean;
-  atopie?: boolean;
-  addiction?: boolean;
-  type_addiction?: string;
-  autres?: string;
-  pathologie_ophtalmologique?: string;
-  traitement?: string;
+  HTA: boolean;
+  diabete: boolean;
+  drepanocytose: boolean;
+  atopie: boolean;
+  addiction: boolean;
+  type_addiction: string;
+  autres: string;
+  pathologie_ophtalmologique: string;
+  traitement: string;
 }
 
 // Antecedents Familiaux
 export interface AntecedentsFamiliaux {
   id: number;
   patient_id: number;
-  cecite?: boolean;
-  GPAO?: boolean;
-  autres?: string;
+  cecite: boolean;
+  GPAO: boolean;
+  autres: string;
 }
 
 // Retinographie
 export interface Retinographie {
   id: number;
   patient_id: number;
-  segment_anterieur_retinographie?: string;
-  fichier_joint?: string;
+  segment_anterieur_retinographie: string;
+  fichier_joint: string;
 }
 
 // Constantes Traitement
 export interface ConstantesTraitement {
   id: number;
   patient_id: number;
-  acuite_visuelle_correction?: boolean;
-  od?: AcuiteVisuelleOeil;
-  og?: AcuiteVisuelleOeil;
-  odg?: AcuiteVisuelleOeil;
-  refraction_automatisee_A?: number;
-  refraction_automatisee_S?: number;
-  refraction_automatisee_C?: number;
-  refraction_automatisee_DP?: number;
-  tonus_oculaire?: number;
-  pachymetrie?: number;
-  cd?: number;
-  traitement_hypotonisant_oculaire?: boolean;
+  acuite_visuelle_correction: boolean;
+  od: AcuiteVisuelleOeil;
+  og: AcuiteVisuelleOeil;
+  odg: AcuiteVisuelleOeil;
+  refraction_automatisee_A: number;
+  refraction_automatisee_S: number;
+  refraction_automatisee_C: number;
+  refraction_automatisee_DP: number;
+  tonus_oculaire: number;
+  pachymetrie: number;
+  cd: number;
+  traitement_hypotonisant_oculaire: boolean;
 }

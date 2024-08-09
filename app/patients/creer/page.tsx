@@ -12,6 +12,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import AntecedentsForm from "@/components/patients/AntecedentsForm";
+import { RetinographieForm } from "@/components/patients/Retinographie";
+import { ConstantesTraitementForm } from "@/components/patients/ContantesTraitementForm";
 
 export default function Page() {
   const [step, setStep] = useState(0);
@@ -32,6 +35,21 @@ export default function Page() {
       title: "Identité Patient",
       body: <PatientIdentity nextFn={handleNextStep} />,
       id: "identite-patient",
+    },
+    {
+      title: "Antécédents",
+      body: <AntecedentsForm nextFn={handleNextStep} />,
+      id: "antecedents-form",
+    },
+    {
+      title: "Retinographie",
+      body: <RetinographieForm nextFn={handleNextStep} />,
+      id: "retinographie",
+    },
+    {
+      title: "Constantes et Traitement",
+      body: <ConstantesTraitementForm nextFn={handleNextStep} />,
+      id: "constantes-traitement",
     },
   ];
 
