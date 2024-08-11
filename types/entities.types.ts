@@ -136,3 +136,9 @@ export interface ConstantesTraitement {
   cd: number;
   traitement_hypotonisant_oculaire: boolean;
 }
+
+export type PatientComplet = {} & Patient &
+  AntecedentsPersonnels &
+  AntecedentsFamiliaux &
+  Retinographie &
+  ConstantesTraitement;

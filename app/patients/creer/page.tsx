@@ -1,7 +1,5 @@
 "use client";
-import PatientIdentity, {
-  PatientFormValues,
-} from "@/components/patients/PatientIdentity";
+import PatientIdentity from "@/components/patients/PatientIdentity";
 import { useState } from "react";
 import {
   Card,
@@ -15,6 +13,7 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import AntecedentsForm from "@/components/patients/AntecedentsForm";
 import { RetinographieForm } from "@/components/patients/Retinographie";
 import { ConstantesTraitementForm } from "@/components/patients/ContantesTraitementForm";
+import Link from "next/link";
 
 export default function Page() {
   const [step, setStep] = useState(0);
@@ -57,6 +56,11 @@ export default function Page() {
 
   return (
     <div className="w-full p-16">
+      <Link href="/patients" className="w-full gap-3 flex items-center">
+        <ChevronLeft className="h-6 w-6 m-0" />
+        <h1 className="sm:text-2xl text-xl font-semibold">Retour</h1>
+      </Link>
+
       <div className="flex flex-col mt-8 w-full h-full justify-center items-center">
         <Card className="w-auto">
           <CardHeader>
