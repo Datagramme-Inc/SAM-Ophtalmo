@@ -1,10 +1,7 @@
 "use client";
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,16 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-// Define schema and types
-const retinographieSchema = z.object({
-  segment_anterieur_retinographie: z
-    .string({ message: "Le segment antérieur est requis" })
-    .nonempty({ message: "Le segment antérieur est requis" }),
-  fichier_joint: z.string({ message: "Le fichier est requis" }).nonempty(),
-});
-
-type RetinographieFormValues = z.infer<typeof retinographieSchema>;
+import {
+  RetinographieFormValues,
+  retinographieSchema,
+} from "@/types/retinographie.types";
 
 type RetinographieFormProps = {
   nextFn: () => void;

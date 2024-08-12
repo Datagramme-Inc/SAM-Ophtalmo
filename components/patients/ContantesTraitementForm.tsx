@@ -1,10 +1,7 @@
 "use client";
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,26 +12,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-
-const constantesTraitementSchema = z.object({
-  acuite_visuelle_correction: z.boolean({ message: "" }),
-  od: z.number().min(0).max(10),
-  og: z.number().min(0).max(10),
-  odg: z.number().min(0).max(10),
-  refraction_automatisee_A: z.number().min(0).max(180),
-  refraction_automatisee_S: z.number().min(-20).max(20),
-  refraction_automatisee_C: z.number().min(-10).max(10),
-  refraction_automatisee_DP: z.number().min(0).max(100),
-  tonus_oculaire: z.number().min(0),
-  pachymetrie: z.number().min(0),
-  cd: z.number().min(0).max(100),
-  traitement_hypotonisant_oculaire: z.boolean(),
-  produits: z.string().optional(),
-});
-
-type ConstantesTraitementFormValues = z.infer<
-  typeof constantesTraitementSchema
->;
+import {
+  ConstantesTraitementFormValues,
+  constantesTraitementSchema,
+} from "@/types/constantes-traitement.types";
 
 type ConstantesTraitementFormProps = {
   nextFn: () => void;
