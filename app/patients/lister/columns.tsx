@@ -42,7 +42,6 @@ export const columns: ColumnDef<Patient>[] = [
   {
     accessorKey: "date_enregistrement",
     header: "Date d'Enregistrement",
-    cell: ({ row }) =>
-      format(row.original.date_enregistrement, "dd/MM/yyyy [à] HH:mm"),
+    cell: ({ row }) => format(row.original.date_creation, "dd/MM/yyyy à HH:mm"),
   },
 ];

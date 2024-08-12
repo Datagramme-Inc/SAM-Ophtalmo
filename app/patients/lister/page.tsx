@@ -1,16 +1,12 @@
-import { Patient } from "@/types/entities.types";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-
-async function getData(): Promise<Patient[]> {
-  // Fetch data from your API here.
-  return [];
-}
+import { getPatients } from "@/app/actions";
+import { Patient } from "@/types/entities.types";
 
 export default async function Page() {
-  const data = await getData();
+  const data: Patient[] = await getPatients();
 
   return (
     <div className="container py-10">
