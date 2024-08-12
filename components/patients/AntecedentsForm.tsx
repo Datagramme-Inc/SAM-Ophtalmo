@@ -20,17 +20,17 @@ import {
 
 type AntecedentsFormProps = {
   nextFn: () => void;
+  setFn: (data: AntecedentsFormValues) => void;
 };
 
-const AntecedentsForm: React.FC<AntecedentsFormProps> = ({ nextFn }) => {
+const AntecedentsForm: React.FC<AntecedentsFormProps> = ({ nextFn, setFn }) => {
   const form = useForm<AntecedentsFormValues>({
     resolver: zodResolver(antecedentsSchema),
   });
 
   const onSubmit = (data: AntecedentsFormValues) => {
-    console.log(data);
+    setFn(data);
     nextFn();
-    // Ajouter la logique pour soumettre les données
   };
 
   return (

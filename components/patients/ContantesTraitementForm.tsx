@@ -19,17 +19,18 @@ import {
 
 type ConstantesTraitementFormProps = {
   nextFn: () => void;
+  setFn: (data: ConstantesTraitementFormValues) => void;
 };
 
 export const ConstantesTraitementForm: React.FC<
   ConstantesTraitementFormProps
-> = ({ nextFn }) => {
+> = ({ nextFn, setFn }) => {
   const form = useForm<ConstantesTraitementFormValues>({
     resolver: zodResolver(constantesTraitementSchema),
   });
 
   const onSubmit = (data: ConstantesTraitementFormValues) => {
-    console.log(data);
+    setFn(data);
     nextFn();
   };
 

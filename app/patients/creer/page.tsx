@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -14,13 +15,14 @@ import AntecedentsForm from "@/components/patients/AntecedentsForm";
 import { RetinographieForm } from "@/components/patients/Retinographie";
 import { ConstantesTraitementForm } from "@/components/patients/ContantesTraitementForm";
 import Link from "next/link";
+import { usePatientStore } from "@/stores/patients-store";
+import { createPatient, getPatients } from "@/app/actions";
 
 export default function Page() {
   const [step, setStep] = useState(0);
 
   function handleNextStep() {
     if (step === MAX_STEPS - 1) return;
-    console.log("dfdf");
     setStep((prev) => prev + 1);
   }
 
@@ -29,30 +31,63 @@ export default function Page() {
     setStep((prev) => prev - 1);
   }
 
+  const {
+    setIdentitePatient,
+    setAntecedents,
+    setConstantesTraitement,
+    setRetinographie,
+    //
+    antecedents,
+    constantes_traitement,
+    identite_patient,
+    retinographie,
+  } = usePatientStore();
+
   const STEPS_INFOS = [
     {
       title: "Identité Patient",
-      body: <PatientIdentity nextFn={handleNextStep} />,
+      body: (
+        <PatientIdentity
+          nextFn={handleNextStep}
+          setFn={setIdentitePatient}
+          initValues={identite_patient}
+        />
+      ),
       id: "identite-patient",
     },
     {
       title: "Antécédents",
-      body: <AntecedentsForm nextFn={handleNextStep} />,
+      body: <AntecedentsForm nextFn={handleNextStep} setFn={setAntecedents} />,
       id: "antecedents-form",
     },
     {
       title: "Retinographie",
-      body: <RetinographieForm nextFn={handleNextStep} />,
+      body: (
+        <RetinographieForm nextFn={handleNextStep} setFn={setRetinographie} />
+      ),
       id: "retinographie",
     },
     {
       title: "Constantes et Traitement",
-      body: <ConstantesTraitementForm nextFn={handleNextStep} />,
+      body: (
+        <ConstantesTraitementForm
+          nextFn={handleNextStep}
+          setFn={setConstantesTraitement}
+        />
+      ),
       id: "constantes-traitement",
     },
   ];
 
   const MAX_STEPS = STEPS_INFOS.length;
+
+  async function handleSubmit() {
+    console.table(identite_patient);
+    await createPatient(identite_patient);
+
+    const p = await getPatients();
+    console.log(p);
+  }
 
   return (
     <div className="w-full p-16">
@@ -91,6 +126,14 @@ export default function Page() {
           <CardContent className="transition-all">
             {STEPS_INFOS[step].body}
           </CardContent>
+
+          {step === MAX_STEPS - 2 && (
+            <CardFooter>
+              <Button className="w-full" onClick={handleSubmit}>
+                Enregistrer
+              </Button>
+            </CardFooter>
+          )}
         </Card>
       </div>
     </div>

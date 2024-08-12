@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -41,16 +40,27 @@ import {
 
 type PatientIdentityProps = {
   nextFn: () => void;
+  setFn: (pf: PatientFormValues) => void;
+  initValues: PatientFormValues;
 };
 
-const PatientIdentity: React.FC<PatientIdentityProps> = ({ nextFn }) => {
+const PatientIdentity: React.FC<PatientIdentityProps> = ({
+  nextFn,
+  setFn,
+  initValues,
+}) => {
   const form = useForm<PatientFormValues>({
     resolver: zodResolver(patientSchema),
   });
 
+  useEffect(() => {
+    form.reset(initValues);
+  }, []);
+
   const onSubmit = (data: PatientFormValues) => {
-    console.log(data);
+    console.log("done");
     nextFn();
+    setFn(data);
   };
 
   return (
@@ -60,45 +70,6 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({ nextFn }) => {
         className="space-y-8 grid grid-cols-2 gap-x-5 gap-y-2"
         id="identite-patient"
       >
-        <FormField
-          control={form.control}
-          name="date_enregistrement"
-          render={({ field }) => (
-            <FormItem className="flex flex-col col-span-2">
-              <FormLabel>Date d&apos;enregistrement</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP", { locale: fr })
-                      ) : (
-                        <span>Choisir une date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    locale={fr}
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="no_fiche"
@@ -192,7 +163,7 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({ nextFn }) => {
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={field.value}
+                    selected={field.value || new Date()}
                     onSelect={field.onChange}
                     locale={fr}
                     captionLayout="dropdown"

@@ -18,17 +18,19 @@ import {
 
 type RetinographieFormProps = {
   nextFn: () => void;
+  setFn: (data: RetinographieFormValues) => void;
 };
 
 export const RetinographieForm: React.FC<RetinographieFormProps> = ({
   nextFn,
+  setFn,
 }) => {
   const form = useForm<RetinographieFormValues>({
     resolver: zodResolver(retinographieSchema),
   });
 
   const onSubmit = (data: RetinographieFormValues) => {
-    console.log(data);
+    setFn(data);
     nextFn();
   };
 

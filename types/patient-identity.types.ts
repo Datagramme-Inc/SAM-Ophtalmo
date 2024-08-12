@@ -15,7 +15,7 @@ export const patientSchema = z
       .string({ message: "Le prénom est requis" })
       .min(1, { message: "Le prénom est requis" }),
     sexe: z.enum(["M", "F"], { message: "Le sexe doit être M ou F" }),
-    age: z.date({ message: "L'âge est requis" }),
+    age: z.date({ message: "L'âge est requis" }).nullable(),
     adresse: z
       .string({ message: "L'adresse est requise" })
       .min(1, { message: "L'adresse est requise" }),

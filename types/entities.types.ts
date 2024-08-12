@@ -69,7 +69,6 @@ export enum Sexe {
 export interface Patient {
   id: number;
   auxiliaire_id: number;
-  date_enregistrement: Date;
   no_fiche: string;
   nom: string;
   prenom: string;
