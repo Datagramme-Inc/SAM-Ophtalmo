@@ -1,29 +1,31 @@
-import { createClient } from "@/utils/supabase/server";
+//import { createClient } from "@/utils/supabase/server";
+'use server'
+import { Currentuser } from "@/app/api/query";
+import { createClient } from "@/utils/supabase/client";
 import { redirect } from "next/navigation";
 
 export default async function AuthButton() {
-  const supabase = createClient();
+ const supabase = createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+ const user = await Currentuser()
   const signOut = async () => {
-    "use server";
-
-    const supabase = createClient();
+    "use server"
     await supabase.auth.signOut();
     return redirect("/login");
   };
 
-  return user ? (
+ 
+
+
+
+   return user ? (
     <div className="flex items-center gap-4">
-      {/* Hey, {user.email}! */}
+       {user.email?.replace("@gmail.com","")}
       <form action={signOut}>
-        <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
+        <button type="submit" className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
           Déconnexion
         </button>
       </form>
     </div>
-  ) : null;
+  ) : null; 
 }
