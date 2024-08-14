@@ -35,7 +35,6 @@ export interface AdminPrincipal {
 export interface Medecin {
   id: number;
   admin_principal_id: number;
-  role: Grade;
   prenom: string;
   nom: string;
   service: string;
@@ -69,7 +68,7 @@ export enum Sexe {
 export interface Patient {
   id: number;
   auxiliaire_id: number;
-  date_enregistrement: Date;
+  date_enregistrement?: Date;
   no_fiche: string;
   nom: string;
   prenom: string;
@@ -83,8 +82,8 @@ export interface Patient {
   pas_glaucome_reevaluation: boolean;
   risque_glaucome_examens: boolean;
   gpao: boolean;
-  date_creation: Date;
-  date_modification: Date;
+  date_creation ?: Date;
+  date_modification?: Date;
 }
 
 // Antecedents Personnels

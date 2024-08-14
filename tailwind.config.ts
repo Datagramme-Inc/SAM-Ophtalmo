@@ -72,6 +72,12 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundImage:{
+        medecin:'Url("/med2.svg")',
+        auxiliaire:'Url("/auxi.jpg")',
+        patient:'Url("/patient.svg")',
+        logo:'Url("/logo.jpeg")'
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
