@@ -1,10 +1,7 @@
 "use client";
-
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,42 +12,32 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-
-const constantesTraitementSchema = z.object({
-  acuite_visuelle_correction: z.boolean({ message: "" }),
-  od: z.number().min(0).max(10),
-  og: z.number().min(0).max(10),
-  odg: z.number().min(0).max(10),
-  refraction_automatisee_A: z.number().min(0).max(180),
-  refraction_automatisee_S: z.number().min(-20).max(20),
-  refraction_automatisee_C: z.number().min(-10).max(10),
-  refraction_automatisee_DP: z.number().min(0).max(100),
-  tonus_oculaire: z.number().min(0),
-  pachymetrie: z.number().min(0),
-  cd: z.number().min(0).max(100),
-  traitement_hypotonisant_oculaire: z.boolean(),
-  produits: z.string().optional(),
-});
-
-type ConstantesTraitementFormValues = z.infer<
-  typeof constantesTraitementSchema
->;
+import {
+  ConstantesTraitementFormValues,
+  constantesTraitementSchema,
+} from "@/types/constantes-traitement.types";
 
 type ConstantesTraitementFormProps = {
   nextFn: () => void;
+  setFn: (data: ConstantesTraitementFormValues) => void;
+  initValues: ConstantesTraitementFormValues;
 };
 
 export const ConstantesTraitementForm: React.FC<
   ConstantesTraitementFormProps
-> = ({ nextFn }) => {
+> = ({ nextFn, setFn, initValues }) => {
   const form = useForm<ConstantesTraitementFormValues>({
     resolver: zodResolver(constantesTraitementSchema),
   });
 
   const onSubmit = (data: ConstantesTraitementFormValues) => {
-    console.log(data);
+    setFn(data);
     nextFn();
   };
+
+  useEffect(() => {
+    form.reset(initValues);
+  }, []);
 
   return (
     <Form {...form}>
@@ -65,23 +52,6 @@ export const ConstantesTraitementForm: React.FC<
           render={({ field }) => (
             <FormItem>
               <FormLabel>Acuité Visuelle (Correction)</FormLabel>
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="traitement_hypotonisant_oculaire"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Traitement Hypotonisant Oculaire</FormLabel>
               <FormControl>
                 <Checkbox
                   checked={field.value}
@@ -137,7 +107,7 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="refraction_automatisee_A"
+          name="refraction_automatisee_a"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Réfraction Automatisée A (0 - 180°)</FormLabel>
@@ -151,7 +121,7 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="refraction_automatisee_S"
+          name="refraction_automatisee_s"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Réfraction Automatisée S (-20 - 20)</FormLabel>
@@ -165,7 +135,7 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="refraction_automatisee_C"
+          name="refraction_automatisee_c"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Réfraction Automatisée C (-10 - 10)</FormLabel>
@@ -179,7 +149,7 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="refraction_automatisee_DP"
+          name="refraction_automatisee_dp"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Réfraction Automatisée DP (0 - 100)</FormLabel>
@@ -235,10 +205,10 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="produits"
+          name="traitement_hypotonisant_oculaire"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Produits</FormLabel>
+              <FormLabel>Traitement Hypotonisant Musculaire</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

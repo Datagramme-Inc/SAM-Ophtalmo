@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -34,56 +33,36 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { fr } from "date-fns/locale";
-
-// Define schema and types
-const patientSchema = z
-  .object({
-    date_enregistrement: z.date({
-      message: "La date d'enregistrement est requise",
-    }),
-    no_fiche: z
-      .string({ message: "Le numéro de fiche est requis" })
-      .length(6, { message: "Le numéro de fiche doit être de 6 caractères" }),
-    nom: z
-      .string({ message: "Le nom est requis" })
-      .min(1, { message: "Le nom est requis" }),
-    prenom: z
-      .string({ message: "Le prénom est requis" })
-      .min(1, { message: "Le prénom est requis" }),
-    sexe: z.enum(["M", "F"], { message: "Le sexe doit être M ou F" }),
-    age: z.date({ message: "L'âge est requis" }),
-    adresse: z
-      .string({ message: "L'adresse est requise" })
-      .min(1, { message: "L'adresse est requise" }),
-    profession: z.string(),
-    telephone: z
-      .string({ message: "Le numéro de téléphone est requis" })
-      .length(9, { message: "Le numéro de téléphone doit être de 9 chiffres" }),
-    confirmer_telephone: z
-      .string({ message: "Le numéro de téléphone est requis" })
-      .length(9, { message: "Le numéro de téléphone doit être de 9 chiffres" }),
-  })
-  .refine(
-    (schema) => {
-      return schema.telephone === schema.confirmer_telephone;
-    },
-    { message: "Les numéros de téléphone ne correspondent pas" }
-  );
-
-export type PatientFormValues = z.infer<typeof patientSchema>;
+import {
+  PatientFormValues,
+  patientSchema,
+} from "@/types/patient-identity.types";
+import { Checkbox } from "../ui/checkbox";
+import { Textarea } from "../ui/textarea";
 
 type PatientIdentityProps = {
   nextFn: () => void;
+  setFn: (pf: PatientFormValues) => void;
+  initValues: PatientFormValues;
 };
 
-const PatientIdentity: React.FC<PatientIdentityProps> = ({ nextFn }) => {
+const PatientIdentity: React.FC<PatientIdentityProps> = ({
+  nextFn,
+  setFn,
+  initValues,
+}) => {
   const form = useForm<PatientFormValues>({
     resolver: zodResolver(patientSchema),
   });
 
+  useEffect(() => {
+    form.reset(initValues);
+  }, []);
+
   const onSubmit = (data: PatientFormValues) => {
-    console.log(data);
+    console.log("done");
     nextFn();
+    setFn(data);
   };
 
   return (
@@ -93,45 +72,6 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({ nextFn }) => {
         className="space-y-8 grid grid-cols-2 gap-x-5 gap-y-2"
         id="identite-patient"
       >
-        <FormField
-          control={form.control}
-          name="date_enregistrement"
-          render={({ field }) => (
-            <FormItem className="flex flex-col col-span-2">
-              <FormLabel>Date d&apos;enregistrement</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP", { locale: fr })
-                      ) : (
-                        <span>Choisir une date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    locale={fr}
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="no_fiche"
@@ -225,7 +165,7 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({ nextFn }) => {
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={field.value}
+                    selected={field.value || new Date()}
                     onSelect={field.onChange}
                     locale={fr}
                     captionLayout="dropdown"
@@ -298,6 +238,56 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({ nextFn }) => {
               <FormLabel>Confirmer téléphone</FormLabel>
               <FormControl>
                 <Input {...field} maxLength={9} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="pas_glaucome_reevaluation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Pas Glaucome - Reévaluation</FormLabel>
+              <FormControl>
+                <Checkbox
+                  className="ml-2"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="risque_glaucome_examens"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Risque Glaucome - Examens</FormLabel>
+              <FormControl>
+                <Checkbox
+                  className="ml-2"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="observation"
+          render={({ field }) => (
+            <FormItem className="col-span-2">
+              <FormLabel>Observation</FormLabel>
+              <FormControl>
+                <Textarea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

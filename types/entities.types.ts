@@ -1,3 +1,8 @@
+import { AntecedentsCompletFormValues } from "./antecedents.types";
+import { ConstantesTraitementFormValues } from "./constantes-traitement.types";
+import { PatientFormValues } from "./patient-identity.types";
+import { RetinographieFormValues } from "./retinographie.types";
+
 // Enum type for Acuité Visuelle Oeil
 export enum AcuiteVisuelleOeil {
   Zero = "0",
@@ -35,6 +40,7 @@ export interface AdminPrincipal {
 export interface Medecin {
   id: number;
   admin_principal_id: number;
+  role: Grade;
   prenom: string;
   nom: string;
   service: string;
@@ -67,8 +73,6 @@ export enum Sexe {
 // Patient
 export interface Patient {
   id: number;
-  auxiliaire_id: number;
-  date_enregistrement?: Date;
   no_fiche: string;
   nom: string;
   prenom: string;
@@ -82,15 +86,15 @@ export interface Patient {
   pas_glaucome_reevaluation: boolean;
   risque_glaucome_examens: boolean;
   gpao: boolean;
-  date_creation ?: Date;
-  date_modification?: Date;
+  date_creation: Date;
+  date_modification: Date;
 }
 
 // Antecedents Personnels
 export interface AntecedentsPersonnels {
   id: number;
   patient_id: number;
-  HTA: boolean;
+  hta: boolean;
   diabete: boolean;
   drepanocytose: boolean;
   atopie: boolean;
@@ -106,7 +110,7 @@ export interface AntecedentsFamiliaux {
   id: number;
   patient_id: number;
   cecite: boolean;
-  GPAO: boolean;
+  gpao: boolean;
   autres: string;
 }
 
@@ -126,14 +130,14 @@ export interface ConstantesTraitement {
   od: AcuiteVisuelleOeil;
   og: AcuiteVisuelleOeil;
   odg: AcuiteVisuelleOeil;
-  refraction_automatisee_A: number;
-  refraction_automatisee_S: number;
-  refraction_automatisee_C: number;
-  refraction_automatisee_DP: number;
+  refraction_automatisee_a: number;
+  refraction_automatisee_s: number;
+  refraction_automatisee_c: number;
+  refraction_automatisee_dp: number;
   tonus_oculaire: number;
   pachymetrie: number;
   cd: number;
-  traitement_hypotonisant_oculaire: boolean;
+  traitement_hypotonisant_oculaire: string;
 }
 
 export type PatientComplet = {} & Patient &
@@ -141,3 +145,8 @@ export type PatientComplet = {} & Patient &
   AntecedentsFamiliaux &
   Retinographie &
   ConstantesTraitement;
+
+export type PatientCompletFormValues = PatientFormValues &
+  AntecedentsCompletFormValues &
+  ConstantesTraitementFormValues &
+  RetinographieFormValues;

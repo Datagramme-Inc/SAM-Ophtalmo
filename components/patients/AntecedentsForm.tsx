@@ -1,9 +1,7 @@
 "use client";
-
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -15,43 +13,34 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-
-// Définir le schéma de validation avec Zod
-const antecedentsSchema = z.object({
-  personnels: z.object({
-    HTA: z.boolean().default(false),
-    diabete: z.boolean().default(false),
-    drepanocytose: z.boolean().default(false),
-    atopie: z.boolean().default(false),
-    addiction: z.boolean().default(false),
-    type_addiction: z.string().optional().nullable().default(""),
-    autres: z.string().optional().nullable().default(""),
-    pathologie_ophtalmologique: z.string().optional().nullable().default(""),
-    traitement: z.string().optional().nullable().default(""),
-  }),
-  familiaux: z.object({
-    cecite: z.boolean().default(false),
-    GPAO: z.boolean().default(false),
-    autres: z.string().optional().nullable().default(""),
-  }),
-});
-
-type AntecedentsFormValues = z.infer<typeof antecedentsSchema>;
+import {
+  AntecedentsFormValues,
+  antecedentsSchema,
+} from "@/types/antecedents.types";
 
 type AntecedentsFormProps = {
   nextFn: () => void;
+  setFn: (data: AntecedentsFormValues) => void;
+  initValues: AntecedentsFormValues;
 };
 
-const AntecedentsForm: React.FC<AntecedentsFormProps> = ({ nextFn }) => {
+const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
+  nextFn,
+  setFn,
+  initValues,
+}) => {
   const form = useForm<AntecedentsFormValues>({
     resolver: zodResolver(antecedentsSchema),
   });
 
   const onSubmit = (data: AntecedentsFormValues) => {
-    console.log(data);
+    setFn(data);
     nextFn();
-    // Ajouter la logique pour soumettre les données
   };
+
+  useEffect(() => {
+    form.reset(initValues);
+  }, []);
 
   return (
     <Form {...form}>
@@ -66,7 +55,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({ nextFn }) => {
         <div className="flex gap-4 flex-wrap">
           <FormField
             control={form.control}
-            name="personnels.HTA"
+            name="personnels.hta"
             render={({ field }) => (
               <FormItem className="flex gap-2 items-baseline">
                 <FormLabel>HTA</FormLabel>
@@ -233,7 +222,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({ nextFn }) => {
 
           <FormField
             control={form.control}
-            name="familiaux.GPAO"
+            name="familiaux.gpao"
             render={({ field }) => (
               <FormItem className="flex gap-2 items-baseline">
                 <FormLabel>GPAO</FormLabel>
