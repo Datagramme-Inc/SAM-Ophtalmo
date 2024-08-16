@@ -1,50 +1,53 @@
-import React, { useState } from "react";
-import { useFormContext, Controller } from "react-hook-form";
-import { Input } from "./ui/input";
-interface DecimalInputProps {
-  name: string;
+import React from "react";
+import { Input, InputProps } from "@/components/ui/input";
+
+interface DecimalInputProps extends Omit<InputProps, 'name' | 'onChange' | 'value'> {
+  value: string;
+  onChange: (value: string) => void;
   maxDecimals?: number;
-  label?: string;
 }
 
-export const DecimalInput: React.FC<DecimalInputProps> = ({
-  name,
+const DecimalInput: React.FC<DecimalInputProps> = ({
+  value,
+  onChange,
   maxDecimals = 2,
-  label,
+  ...props
 }) => {
-  const { control, setValue } = useFormContext();
-  const [integerPart, setIntegerPart] = useState("");
-  const [decimalPart, setDecimalPart] = useState("");
+  const [integerPart, decimalPart] = String(value || "").split(".");
 
   const handleIntegerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "");
-    setIntegerPart(value);
-    setValue(name, `${value}.${decimalPart}`);
+    const newValue = e.target.value + (decimalPart ? `.${decimalPart}` : "");
+    onChange(newValue);
   };
 
   const handleDecimalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, "");
-    if (value.length > maxDecimals) value = value.slice(0, maxDecimals);
-    setDecimalPart(value);
-    setValue(name, `${integerPart}.${value}`);
+    const newValue = `${integerPart || "0"}.${e.target.value}`;
+    onChange(newValue);
   };
 
   return (
-    <div>
-      {label && <label>{label}</label>}
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Input
-          value={integerPart}
-          onChange={handleIntegerChange}
-          placeholder="0"
-        />
-        <span>.</span>
-        <Input
-          value={decimalPart}
-          onChange={handleDecimalChange}
-          placeholder="00"
-        />
-      </div>
+    <div className="flex">
+      <Input
+        {...props}
+        type="text"
+        inputMode="numeric"
+        pattern="\d*"
+        title="Please enter a valid integer"
+        value={integerPart || ""}
+        onChange={handleIntegerChange}
+      />
+      <span className="mx-1">.</span>
+      <Input
+        {...props}
+        type="text"
+        inputMode="decimal"
+        pattern={`\\d{0,${maxDecimals}}`}
+        title={`Please enter up to ${maxDecimals} decimals`}
+        value={decimalPart || ""}
+        onChange={handleDecimalChange}
+      />
     </div>
   );
 };
+
+export default DecimalInput;
