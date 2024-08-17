@@ -16,6 +16,7 @@ import {
   ConstantesTraitementFormValues,
   constantesTraitementSchema,
 } from "@/types/constantes-traitement.types";
+import DecimalInput from "../DecimalInput";
 
 type ConstantesTraitementFormProps = {
   nextFn: () => void;
@@ -70,7 +71,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>OD</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -84,7 +85,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>OG</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -98,7 +99,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>ODG</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -112,7 +113,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Réfraction Automatisée A (0 - 180°)</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -126,7 +127,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Réfraction Automatisée S (-20 - 20)</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -140,7 +141,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Réfraction Automatisée C (-10 - 10)</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -154,7 +155,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Réfraction Automatisée DP (0 - 100)</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -168,7 +169,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Tonus Oculaire</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -182,7 +183,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Pachymétrie</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -196,7 +197,7 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>CD</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -66,23 +66,23 @@ export const RetinographieForm: React.FC<RetinographieFormProps> = ({
           name="fichier_joint"
           render={({ field }) => (
             <FormItem>
-            <FormLabel>Fichier Joint</FormLabel>
-            <FormControl>
-              <Input 
-                type="file" 
-                onChange={(e) => {
-                  if (e.target.files && e.target.files.length > 0) {
-                    field.onChange(e.target.files[0]); // Store the file in the form state
-                  }
-                }} 
-                name={field.name}
-                onBlur={field.onBlur}
-                ref={field.ref}
-                // Note: We do not set a value prop here, since input type="file" handles it internally
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+              <FormLabel>Fichier Joint</FormLabel>
+              <FormControl>
+                <Input
+                  type="file"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      field.onChange(e.target.files[0]); // Store the file in the form state
+                    }
+                  }}
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  ref={field.ref}
+                  // Note: We do not set a value prop here, since input type="file" handles it internally
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
       </form>
