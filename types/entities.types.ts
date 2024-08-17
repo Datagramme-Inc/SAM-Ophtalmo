@@ -39,13 +39,11 @@ export interface AdminPrincipal {
 // Medecin
 export interface Medecin {
   id: number;
- // admin_principal_id: number;
   role: Grade;
   prenom: string;
   nom: string;
   service: string;
   telephone: string;
- // confirmer_telephone: string;
   date_creation: Date;
   date_modification: Date;
 }
