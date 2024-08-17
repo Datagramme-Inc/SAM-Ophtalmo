@@ -14,3 +14,5 @@ export const REGIONS_SENEGAL = [
   "Thiès",
   "Ziguinchor",
 ];
+
+export const MAIN_ADMIN = "org_2dm3uHAD18iMU1TjVJJTywHa0Jv";
