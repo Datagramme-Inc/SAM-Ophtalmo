@@ -1,4 +1,5 @@
 "use server";
+import { AuxiliaireFormValues } from "@/components/auxiliaireModal";
 import { MedecinFormValues } from "@/components/medecinmodal";
 import { MAIN_ADMIN } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
@@ -96,4 +97,53 @@ export const uploadfile = async (retinofile: any) => {
 
   console.log("File uploaded successfully:", data);
   return { data };
+};
+
+export type Auxiliaire = {
+  prenom: string;
+  nom: string;
+  service: string;
+  telephone: string;
+  confirmer_telephone: string;
+  admin_principal_id: string;
+};
+
+export const createAuxiliaire = async (data: AuxiliaireFormValues) => {
+  if (data.phone !== data.repeatPhone)
+    throw new Error("Les numéros de téléphone ne correspondent pas");
+  const supabase = createClient();
+  // je crée d'abord le mail du medecin a partir de son téléphone
+  // let mail=medecin.telephone+"@gmail.com"
+  let mail = `${data.phone}@gmail.com`;
+  // je crée son profil
+  const db_Data: Auxiliaire = {
+    prenom: data.firstName,
+    nom: data.lastName,
+    service: data.service,
+    telephone: data.phone,
+    confirmer_telephone: data.repeatPhone,
+    admin_principal_id: MAIN_ADMIN,
+  };
+
+  try {
+    // j'inscris le user d'abord ensuite je crée son profil
+    const { data: user } = await supabase.auth.signUp({
+      email: mail,
+      password: data.password,
+      options: {
+        data: {
+          role: "auxiliaire",
+        },
+      },
+    });
+
+    const { error } = await supabase.from("auxiliaire").insert([db_Data]);
+    if (error) {
+      throw error;
+    }
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
 };
