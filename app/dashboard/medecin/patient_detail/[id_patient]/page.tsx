@@ -20,7 +20,7 @@ async function page({ params }: { params: { id_patient: string } }) {
         <AccordionItem value="identite-patient">
           <AccordionTrigger>Identité Patient</AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-3 gap-y-4">
+            <div className="grid md:grid-cols-3 grid-cols-2 gap-y-4">
               <div className="flex space-x-1 ">
                 <p className="text-sm font-sem">No Fiche:</p>
                 <p className="text-sm">{patient.no_fiche || ""}</p>
@@ -66,7 +66,7 @@ async function page({ params }: { params: { id_patient: string } }) {
             <h2 className="text-base font-semibold underline underline-offset-2 my-4">
               Personnels
             </h2>
-            <div className="grid grid-cols-4 gap-y-4 gap-2">
+            <div className="grid md:grid-cols-4 grid-cols-2  gap-y-4 gap-2">
               <div className="flex space-x-1 items-center">
                 <p className="text-sm font-semibold">HTA</p>
                 {patient.hta ? (

@@ -244,55 +244,7 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="pas_glaucome_reevaluation"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pas Glaucome - Reévaluation</FormLabel>
-              <FormControl>
-                <Checkbox
-                  className="ml-2"
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="risque_glaucome_examens"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Risque Glaucome - Examens</FormLabel>
-              <FormControl>
-                <Checkbox
-                  className="ml-2"
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="observation"
-          render={({ field }) => (
-            <FormItem className="col-span-2">
-              <FormLabel>Observation</FormLabel>
-              <FormControl>
-                <Textarea {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+       
       </form>
     </Form>
   );

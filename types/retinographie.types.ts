@@ -5,7 +5,7 @@ export const retinographieSchema = z.object({
   segment_anterieur_retinographie: z.string({
     message: "Le segment antérieur est requis",
   }),
-  fichier_joint: z.string().optional(),
+  fichier_joint: z.instanceof(File).optional(),
 });
 
 export type RetinographieFormValues = z.infer<typeof retinographieSchema>;

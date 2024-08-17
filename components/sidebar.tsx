@@ -7,7 +7,7 @@ import { BedDoubleIcon, Book, LogOut, Settings, UserRound } from "lucide-react"
 export default  function Sidebar() {
   const pathname = usePathname()
   return (
-    <div className="w-72  flex flex-col justify-between bg-[#ecf2f3] dark:bg-gray-800">
+    <div className="lg:w-72 hidden  md:flex md:flex-col md:justify-between bg-[#ecf2f3] dark:bg-gray-800">
     <div className="flex h-[59.5px] items-center  px-6 bg-white">
       <Link className="flex items-center gap-2 font-semibold" href="/dashboard/accueil">
         
@@ -35,13 +35,7 @@ export default  function Sidebar() {
           Auxiliaire
         </Link>
        
-        <Link
-          className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-800 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-          href="#"
-        >
-          <Settings className="h-4 w-4" />
-          Settings
-        </Link>
+     
       </nav>
     </div>
     <div className="mt-auto p-4">
