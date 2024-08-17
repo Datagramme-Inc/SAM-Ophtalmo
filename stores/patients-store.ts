@@ -68,7 +68,7 @@ export const defaultPatient: PatientStore = {
     observation: "",
   },
   retinographie: {
-    fichier_joint: "",
+    fichier_joint: undefined,
     segment_anterieur_retinographie: "",
   },
   setAntecedents: () => {},
