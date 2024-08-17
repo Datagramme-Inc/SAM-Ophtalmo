@@ -43,3 +43,17 @@ export const createMedecin = async () => {
     throw error;
   }
 };
+
+export const uploadfile= async (retinofile:any)=>{
+  const supabase = createClient();
+  
+  const { data, error } = await supabase.storage.from('samophtalmo').upload('public/avatar1.png', retinofile)
+
+  if (error) {
+    console.error('Error uploading file:', error);
+    return { error };
+  }
+
+  console.log('File uploaded successfully:', data);
+  return { data };
+}

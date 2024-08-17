@@ -16,8 +16,11 @@ import { RetinographieForm } from "@/components/patients/Retinographie";
 import { ConstantesTraitementForm } from "@/components/patients/ContantesTraitementForm";
 import Link from "next/link";
 import { usePatientStore } from "@/stores/patients-store";
-import { createPatient } from "@/app/actions";
+//import { createPatient } from "@/app/actions";
 import { PatientCompletFormValues } from "@/types/entities.types";
+import { uploadfile } from "@/app/api/query";
+import { createClient } from "@/utils/supabase/client";
+//import { createClient } from "@supabase/supabase-js";
 
 export default function Page() {
   const [step, setStep] = useState(0);
@@ -33,6 +36,18 @@ export default function Page() {
   function handlePreviousStep() {
     if (step === 0) return;
     setStep((prev) => prev - 1);
+  }
+  async function uploadFile(file:any) {
+    const supabase = createClient();
+    const { data, error } = await supabase.storage.from('samophtalmo').upload(`${file.name}`, file);
+  
+    if (error) {
+      console.error('Error uploading file:', error);
+      return { error };
+    }
+  
+    console.log('File uploaded successfully:', data);
+    return { data };
   }
 
   const {
@@ -111,9 +126,18 @@ export default function Page() {
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
+      console.log("je suis la")
       setError(null);
       setIsSaving(true);
-      await createPatient(fullData);
+       // Upload the file to Supabase
+    if (fullData.fichier_joint) {
+      const uploadResult = await uploadFile(fullData.fichier_joint);
+      if (uploadResult.error) {
+        throw new Error('File upload failed');
+      }
+    //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
+    }
+     // await createPatient(fullData);
       reset();
       setStep(0);
     } catch (err: any) {

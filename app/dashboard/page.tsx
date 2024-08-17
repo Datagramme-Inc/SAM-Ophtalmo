@@ -9,11 +9,11 @@ export default async function Homepage() {
 
   if (user?.user_metadata?.role === "admin") {
     redirect("/dashboard/admin");
-  } else {
-    if (user?.user_metadata?.role === "medecin") {
+  } else if (user?.user_metadata?.role === "medecin") {  
       redirect("/dashboard/medecin");
-    }
-    return redirect("/login");
-  }
+  }else if((user?.user_metadata?.role === "auxiliaire")){
+    redirect("/auxiliaire")
+  }else  return redirect("/login");
+
   // Votre code pour obtenir les détails de l'utilisateur ou toute autre logique
 }
