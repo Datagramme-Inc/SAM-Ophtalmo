@@ -1,14 +1,15 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { CLient_Reservation } from "@/utils/interface/interface";
+// import { CLient_Reservation } from "@/utils/interface/interface";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
-import { priorities } from "../reservationtable/data/data";
+// import { priorities } from "../reservationtable/data/data";
 import { FolderSearch } from "lucide-react";
 import Link from "next/link";
-
-export const columns: ColumnDef<CLient_Reservation>[] = [
+type Priorities = Record<string, any>[];
+const priorities: Priorities = [];
+export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "reservation_id",
     header: ({ column }) => (
