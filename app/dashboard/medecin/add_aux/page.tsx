@@ -8,15 +8,13 @@ import { Auxiliaire } from "@/types/entities.types";
 import { createClient } from "@/utils/supabase/client";
 
 
-
-
 export default function TaskPage() {
 
   const [auxiliaire, setAuxiliaire] = useState<Auxiliaire[]>([]); 
   const handleInsert=(payload :any)=>{
     console.log(payload.new)
     setAuxiliaire((oldAuxiliaire) => [...oldAuxiliaire, payload.new as Auxiliaire]);
-    console.log("after", auxiliaire.length)
+    
   }
   const supabase = createClient();
 
@@ -49,17 +47,18 @@ export default function TaskPage() {
         <div className="flex items-center justify-between space-y-2">
           <div className="flex justify-between items-center w-full space-x-4">
             <div className="flex flex-col space-y-2">
-              <h2 className="text-2xl font-bold tracking-normal">Liste des Auxiliaires !</h2>
-              <p className="text-muted-foreground">
+              <h2 className="lg:text-2xl text-base  font-bold tracking-normal w-full">Liste des Auxiliaires !</h2>
+              <p className="text-muted-foreground text-sm ">
                Cette liste represente l'ensemble des auxiliaires du médecin
               </p>
             </div>
-            <div>
-              <AuxiliaireModal />
-            </div>
+           
           </div>
         </div>
         <div className="bg-white mb-7 py-4 px-2 rounded-sm">
+          <div className="flex flex-end mb-2 justify-end">
+              <AuxiliaireModal />
+            </div>
           <DataTable data={auxiliaire} columns={columns} />
         </div>
       </div>

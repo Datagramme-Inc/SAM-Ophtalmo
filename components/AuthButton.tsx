@@ -20,7 +20,7 @@ export default async function AuthButton() {
 
    return user ? (
     <div className="flex items-center gap-4">
-       {user.email?.replace("@gmail.com","")}
+       
       <form action={signOut}>
         <button type="submit" className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
           Déconnexion

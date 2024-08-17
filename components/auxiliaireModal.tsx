@@ -2,15 +2,12 @@
 import { Button } from "@/components/ui/button"
 import {
   Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,} from "@/components/ui/dialog"
-  import { useForm } from "react-hook-form";
+  import { useForm ,SubmitHandler} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 // Définition du schéma de validation avec zod
 const schema = z.object({
-  title: z.enum(["Dr", "Pr"], {
-    required_error: "Vous devez choisir un titre",
-  }),
   firstName: z.string().min(1, { message: "Le prénom est requis" }),
   lastName: z.string().min(1, { message: "Le nom est requis" }),
   service: z.string().min(1, { message: "Le service est requis" }),
@@ -28,13 +25,16 @@ import { Plus } from "lucide-react"
 
 export function AuxiliaireModal() {
  
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit,formState: { errors } } = useForm({
         resolver: zodResolver(schema),
       });
     
       const onSubmit = (data:any) => {
         console.log(data);
       };
+      const onerror=(data:any)=>{
+        console.log(data);
+      }
     
   return (
     
@@ -42,17 +42,17 @@ export function AuxiliaireModal() {
       <DialogTrigger asChild>
       <Button   className='bg-[#079b31] space-x-2 font-medium hover:bg-[#0f6a29]'>
             <Plus size={20} color="#ffffff " strokeWidth={1.5} />
-            <span>Ajouter un nouveau Auxiliaire</span> </Button>
+            <span className="sm:text-xs md:text-sm">Ajouter un nouveau Auxiliaire</span> </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px]   ">
+      <DialogContent className="sm:max-w-lg   ">
         <DialogTitle>
             Ajouter un auxiliaire
         </DialogTitle>
-        <form onSubmit={handleSubmit(onSubmit)} className=" w-full p-6  rounded-lg shadow-md">
+        <form onSubmit={handleSubmit(onSubmit,onerror)} className=" w-full p-6  rounded-lg shadow-md">
   
 
       {/* Prénom */}
-      <div className="mb-4 flex space-x-1 w-full">
+      <div className="mb-4 md:flex flex-col md:flex-row  space-x-1 w-full">
        <div className="w-1/2">
        <label className="block text-sm font-medium text-gray-700">Prénom</label>
         <input
@@ -78,7 +78,7 @@ export function AuxiliaireModal() {
       </div>
       </div>
     
-    <div className="flex w-full ">
+    <div className="md:flex flex-col md:flex-row  w-full ">
          {/* Téléphone */}
       <div className="mb-4 w-1/2">
         <label className="block text-sm font-medium text-gray-700">Téléphone</label>
@@ -131,7 +131,7 @@ export function AuxiliaireModal() {
           Soumettre
         </button>
       </div>
-    </form>
+      </form>
         
       </DialogContent>
     </Dialog> 
