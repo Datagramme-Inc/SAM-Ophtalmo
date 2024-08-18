@@ -78,8 +78,6 @@ export const ConstantesTraitementFormD: React.FC<
           )}
         />
 
-       
-
         <FormField
           control={form.control}
           name="odg"
@@ -136,7 +134,7 @@ export const ConstantesTraitementFormD: React.FC<
           )}
         />
 
-     {/*   <FormField
+        {/*   <FormField
           control={form.control}
           name="refraction_automatisee_dp_d"
           render={({ field }) => (

@@ -149,11 +149,11 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({
                   id="age"
                   min="0"
                   max="120"
-                  value={field.value !== undefined ? String(field.value) : ''}
+                  value={field.value !== undefined ? String(field.value) : ""}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                   placeholder="Entrez votre âge"
                   className={cn(
-                    "w-[50px] p-3 border border-gray-300 rounded-md text-left font-normal",
+                    "p-3 border border-gray-300 rounded-md text-left font-normal",
                     !field.value && "text-muted-foreground"
                   )}
                 />
@@ -229,8 +229,6 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({
             </FormItem>
           )}
         />
-
-       
       </form>
     </Form>
   );
