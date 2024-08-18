@@ -86,12 +86,13 @@ export default function TaskPage() {
                 Cette liste represente l'ensemble des auxiliaires du médecin
               </p>
             </div>
-            <div>
-              <AuxiliaireModal />
-            </div>
+           
           </div>
         </div>
         <div className="bg-white mb-7 py-4 px-2 rounded-sm">
+          <div className="flex flex-end mb-2 justify-end">
+              <AuxiliaireModal />
+            </div>
           <DataTable data={auxiliaire} columns={columns} />
         </div>
       </div>

@@ -83,6 +83,7 @@ export const createMedecin = async (data: MedecinFormValues) => {
   }
 };
 
+
 export const uploadfile = async (retinofile: any) => {
   const supabase = createClient();
 

@@ -53,11 +53,11 @@ export default function Login({
   // };
 
   return (
-    <div className=" flex  w-full px-8  gap-2">
-      <div className="w-1/2 bg-logo h-screen bg-no-repeat bg-cover">
-
-      </div>
-      <form className="w-1/2 flex flex-col  justify-center items-center gap-2 text-foreground">
+    <div className=" flex md:flex-row flex-col   h-full w-full px-8  gap-2">
+        <div className="md:w-1/2  bg-logo md:h-screen h-1/2 w-full bg-no-repeat bg-cover">
+         
+         </div>
+      <form className="md:w-1/2 mt-2 h-1/2 flex flex-col md:h-full   justify-center items-center gap-2 text-foreground">
         <label className="text-md" htmlFor="Telephone">
           Telephone
         </label>
@@ -97,6 +97,7 @@ export default function Login({
           </p>
         )}
       </form>
+      
     </div>
   );
 }

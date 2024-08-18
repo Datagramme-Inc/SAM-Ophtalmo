@@ -44,7 +44,7 @@ export const ConstantesTraitementForm: React.FC<
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 grid grid-cols-3 content-around gap-4"
+        className="space-y-8 grid md:grid-cols-3 grid-cols-2 content-around gap-4"
         id="constantes-traitement"
       >
         <FormField

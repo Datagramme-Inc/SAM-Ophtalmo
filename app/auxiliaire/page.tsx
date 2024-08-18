@@ -20,6 +20,7 @@ import { usePatientStore } from "@/stores/patients-store";
 import { PatientCompletFormValues } from "@/types/entities.types";
 import { uploadfile } from "@/app/api/query";
 import { createClient } from "@/utils/supabase/client";
+import { createPatient } from "../actions";
 //import { createClient } from "@supabase/supabase-js";
 
 export default function Page() {
@@ -137,7 +138,7 @@ export default function Page() {
       }
     //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
     }
-     // await createPatient(fullData);
+      await createPatient(fullData);
       reset();
       setStep(0);
     } catch (err: any) {

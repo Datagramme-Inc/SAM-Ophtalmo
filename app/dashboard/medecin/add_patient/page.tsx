@@ -18,6 +18,7 @@ import Link from "next/link";
 import { usePatientStore } from "@/stores/patients-store";
 import { PatientCompletFormValues } from "@/types/entities.types";
 import { createClient } from "@/utils/supabase/client";
+import { createPatient } from "@/app/actions";
 
 export default function Page() {
   const [step, setStep] = useState(0);
@@ -136,7 +137,7 @@ export default function Page() {
         }
         //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
       }
-      // await createPatient(fullData);
+        await createPatient(fullData);
       reset();
       setStep(0);
     } catch (err: any) {
