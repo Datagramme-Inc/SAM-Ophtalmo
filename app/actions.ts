@@ -39,6 +39,8 @@ export async function getPatients() {
   const user = await getUser();
   if (!user) throw new Error("Unauthorized not found");
 
+  if (user.user_metadata.role === "auxiliaire") return [];
+
   const { data, error } = await supabase
     .from("patients")
     .select("*, auxiliaire (id_medecin)")
