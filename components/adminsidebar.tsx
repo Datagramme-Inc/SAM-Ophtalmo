@@ -21,7 +21,7 @@ export default  function Adminsidebar() {
       <nav className="grid items-start px-4 gap-y-6 text-sm font-normal">
         <Link
           
-          href="/dashboard/medecin" className={`link ${pathname === '/dashboard/medecin' ? 'text-white bg-[#079a31]' : ''} flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-gray-900` }
+          href="/dashboard/admin" className={`link ${pathname === '/dashboard/medecin' ? 'text-white bg-[#079a31]' : ''} flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-gray-900` }
         >
           <HomeIcon className="h-4 w-4" />
           Home
@@ -29,14 +29,14 @@ export default  function Adminsidebar() {
       
         <Link
         
-          href="/dashboard/accueil" className={`link ${pathname === '/dashboard/medecin/add_aux' ? 'text-white bg-[#079a31]' : ''} flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-gray-900` }
+          href="/dashboard/admin/auxiliaire" className={`link ${pathname === '/dashboard/medecin/add_aux' ? 'text-white bg-[#079a31]' : ''} flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-gray-900` }
         >
           <UsersIcon className="h-4 w-4" />
           Auxiliaire
         </Link>
         <Link
         
-        href="/dashboard/accueil" className={`link ${pathname === '/dashboard/medecin/add_aux' ? 'text-white bg-[#079a31]' : ''} flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-gray-900` }
+        href="/dashboard/admin/medecin" className={`link ${pathname === '/dashboard/medecin/add_aux' ? 'text-white bg-[#079a31]' : ''} flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-gray-900` }
       >
         <UsersIcon className="h-4 w-4" />
         Medecin

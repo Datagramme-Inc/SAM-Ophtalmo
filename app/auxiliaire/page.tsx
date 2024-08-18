@@ -21,6 +21,7 @@ import { PatientCompletFormValues } from "@/types/entities.types";
 import { uploadfile } from "@/app/api/query";
 import { createClient } from "@/utils/supabase/client";
 import { createPatient } from "../actions";
+import { ConstantesTraitementFormD } from "@/components/patients/ConstantesTraitementFormD";
 //import { createClient } from "@supabase/supabase-js";
 
 export default function Page() {
@@ -55,10 +56,12 @@ export default function Page() {
     setIdentitePatient,
     setAntecedents,
     setConstantesTraitement,
+    setConstantesTraitementD,
     setRetinographie,
     identite_patient,
     antecedents,
     constantes_traitement,
+    constantes_traitementD,
     retinographie,
     reset,
   } = usePatientStore();
@@ -86,6 +89,29 @@ export default function Page() {
       ),
       id: "antecedents-form",
     },
+   
+    {
+      title: "Constantes et Traitement OG (Oeil Gauche )",
+      body: (
+        <ConstantesTraitementForm
+          nextFn={handleNextStep}
+          setFn={setConstantesTraitement}
+          initValues={constantes_traitement}
+        />
+      ),
+      id: "constantes-traitement",
+    },
+    {
+      title: "Constantes et Traitement OD (Oeil Droite )",
+      body: (
+        <ConstantesTraitementFormD
+          nextFn={handleNextStep}
+          setFn={setConstantesTraitementD}
+          initValues={constantes_traitementD}
+        />
+      ),
+      id: "constantes-traitement",
+    },
     {
       title: "Retinographie",
       body: (
@@ -96,17 +122,6 @@ export default function Page() {
         />
       ),
       id: "retinographie",
-    },
-    {
-      title: "Constantes et Traitement",
-      body: (
-        <ConstantesTraitementForm
-          nextFn={handleNextStep}
-          setFn={setConstantesTraitement}
-          initValues={constantes_traitement}
-        />
-      ),
-      id: "constantes-traitement",
     },
     {
       title: "Valider",
@@ -124,6 +139,7 @@ export default function Page() {
       ...antecedents.familiaux,
       ...retinographie,
       ...constantes_traitement,
+      ...constantes_traitementD,
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
@@ -137,7 +153,11 @@ export default function Page() {
         throw new Error('File upload failed');
       }
     //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
+    delete fullData.fichier_joint;
     }
+    console.log("test")
+    console.log(fullData)
+   // const plainObject = { ...fullData };  
       await createPatient(fullData);
       reset();
       setStep(0);

@@ -13,25 +13,25 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  ConstantesTraitementFormValues,
-  constantesTraitementSchema,
+  ConstantesTraitementFormValuesD,
+  constantesTraitementSchemaD,
 } from "@/types/constantes-traitement.types";
 import DecimalInput from "../DecimalInput";
 
 type ConstantesTraitementFormProps = {
   nextFn: () => void;
-  setFn: (data: ConstantesTraitementFormValues) => void;
-  initValues: ConstantesTraitementFormValues;
+  setFn: (data: ConstantesTraitementFormValuesD) => void;
+  initValues: ConstantesTraitementFormValuesD;
 };
 
-export const ConstantesTraitementForm: React.FC<
+export const ConstantesTraitementFormD: React.FC<
   ConstantesTraitementFormProps
 > = ({ nextFn, setFn, initValues }) => {
-  const form = useForm<ConstantesTraitementFormValues>({
-    resolver: zodResolver(constantesTraitementSchema),
+  const form = useForm<ConstantesTraitementFormValuesD>({
+    resolver: zodResolver(constantesTraitementSchemaD),
   });
 
-  const onSubmit = (data: ConstantesTraitementFormValues) => {
+  const onSubmit = (data: ConstantesTraitementFormValuesD) => {
     setFn(data);
     nextFn();
   };
@@ -49,7 +49,7 @@ export const ConstantesTraitementForm: React.FC<
       >
         <FormField
           control={form.control}
-          name="acuite_visuelle_correction"
+          name="acuite_visuelle_correction_d"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Acuité Visuelle (Correction)</FormLabel>
@@ -64,14 +64,12 @@ export const ConstantesTraitementForm: React.FC<
           )}
         />
 
-    
-
         <FormField
           control={form.control}
-          name="og"
+          name="od"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>OG</FormLabel>
+              <FormLabel>OD</FormLabel>
               <FormControl>
                 <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
@@ -80,10 +78,25 @@ export const ConstantesTraitementForm: React.FC<
           )}
         />
 
+       
 
         <FormField
           control={form.control}
-          name="refraction_automatisee_a"
+          name="odg"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ODG</FormLabel>
+              <FormControl>
+                <DecimalInput value={field.value} onChange={field.onChange} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="refraction_automatisee_a_d"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Réfraction Automatisée A (0 - 180°)</FormLabel>
@@ -97,7 +110,7 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="refraction_automatisee_s"
+          name="refraction_automatisee_s_d"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Réfraction Automatisée S (-20 - 20)</FormLabel>
@@ -111,7 +124,7 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="refraction_automatisee_c"
+          name="refraction_automatisee_c_d"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Réfraction Automatisée C (-10 - 10)</FormLabel>
@@ -123,9 +136,9 @@ export const ConstantesTraitementForm: React.FC<
           )}
         />
 
-        <FormField
+     {/*   <FormField
           control={form.control}
-          name="refraction_automatisee_dp"
+          name="refraction_automatisee_dp_d"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Réfraction Automatisée DP (0 - 100)</FormLabel>
@@ -135,11 +148,11 @@ export const ConstantesTraitementForm: React.FC<
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}
-          name="tonus_oculaire"
+          name="tonus_oculaire_d"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tonus Oculaire</FormLabel>
@@ -153,7 +166,7 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="pachymetrie"
+          name="pachymetrie_d"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Pachymétrie</FormLabel>
@@ -167,7 +180,7 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="cd"
+          name="cd_d"
           render={({ field }) => (
             <FormItem>
               <FormLabel>CD</FormLabel>
@@ -181,7 +194,7 @@ export const ConstantesTraitementForm: React.FC<
 
         <FormField
           control={form.control}
-          name="traitement_hypotonisant_oculaire"
+          name="traitement_hypotonisant_oculaire_d"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Traitement Hypotonisant Musculaire</FormLabel>

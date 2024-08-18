@@ -1,5 +1,5 @@
 import { AntecedentsFormValues } from "@/types/antecedents.types";
-import { ConstantesTraitementFormValues } from "@/types/constantes-traitement.types";
+import { ConstantesTraitementFormValues, ConstantesTraitementFormValuesD } from "@/types/constantes-traitement.types";
 import { PatientFormValues } from "@/types/patient-identity.types";
 import { RetinographieFormValues } from "@/types/retinographie.types";
 import { create } from "zustand";
@@ -7,11 +7,15 @@ import { create } from "zustand";
 export type PatientStore = {
   antecedents: AntecedentsFormValues;
   constantes_traitement: ConstantesTraitementFormValues;
+  constantes_traitementD: ConstantesTraitementFormValuesD;
   identite_patient: PatientFormValues;
   retinographie: RetinographieFormValues;
   setAntecedents: (antecedents: AntecedentsFormValues) => void;
   setConstantesTraitement: (
     constantes_traitement: ConstantesTraitementFormValues
+  ) => void;
+  setConstantesTraitementD: (
+    constantes_traitementD: ConstantesTraitementFormValuesD
   ) => void;
   setIdentitePatient: (identite_patient: PatientFormValues) => void;
   setRetinographie: (retinographie: RetinographieFormValues) => void;
@@ -42,9 +46,9 @@ export const defaultPatient: PatientStore = {
   constantes_traitement: {
     acuite_visuelle_correction: false,
     cd: 0.0,
-    od: 0.0,
+   // od: 0.0,
     og: 0.0,
-    odg: 0.0,
+   // odg: 0.0,
     pachymetrie: 0,
     refraction_automatisee_a: 0,
     refraction_automatisee_c: 0,
@@ -53,6 +57,21 @@ export const defaultPatient: PatientStore = {
     tonus_oculaire: 0,
     traitement_hypotonisant_oculaire: "",
   },
+  constantes_traitementD: {
+    acuite_visuelle_correction_d: false,
+    cd_d: 0.0,
+    od: 0.0,
+   // og: 0.0,
+    odg: 0.0,
+    pachymetrie_d: 0,
+    refraction_automatisee_a_d: 0,
+    refraction_automatisee_c_d: 0,
+    refraction_automatisee_s_d: 0,
+   // refraction_automatisee_dp_d: 0,
+    tonus_oculaire_d: 0,
+    traitement_hypotonisant_oculaire_d: "",
+  },
+  
   identite_patient: {
     age: 0,
     adresse: "",
@@ -73,6 +92,7 @@ export const defaultPatient: PatientStore = {
   },
   setAntecedents: () => {},
   setConstantesTraitement: () => {},
+  setConstantesTraitementD: () => {},
   setIdentitePatient: () => {},
   setRetinographie: () => {},
   reset: () => {},
@@ -83,6 +103,8 @@ export const usePatientStore = create<PatientStore>((set) => ({
   setAntecedents: (antecedents) => set({ antecedents }),
   setConstantesTraitement: (constantes_traitement) =>
     set({ constantes_traitement }),
+  setConstantesTraitementD: (constantes_traitementD) =>
+    set({ constantes_traitementD }),
   setIdentitePatient: (identite_patient) => set({ identite_patient }),
   setRetinographie: (retinographie) => set({ retinographie }),
   reset: () => set(defaultPatient),
