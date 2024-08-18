@@ -37,16 +37,18 @@ export default function Page() {
     if (step === 0) return;
     setStep((prev) => prev - 1);
   }
-  async function uploadFile(file:any) {
+  async function uploadFile(file: any) {
     const supabase = createClient();
-    const { data, error } = await supabase.storage.from('samophtalmo').upload(`${file.name}`, file);
-  
+    const { data, error } = await supabase.storage
+      .from("samophtalmo")
+      .upload(`${file.name}`, file);
+
     if (error) {
-      console.error('Error uploading file:', error);
+      console.error("Error uploading file:", error);
       return { error };
     }
-  
-    console.log('File uploaded successfully:', data);
+
+    console.log("File uploaded successfully:", data);
     return { data };
   }
 
@@ -117,7 +119,7 @@ export default function Page() {
   const MAX_STEPS = STEPS_INFOS.length;
 
   async function handleSubmit() {
-    const fullData: PatientCompletFormValues = {
+    const fullData = {
       ...identite_patient,
       ...antecedents.personnels,
       ...antecedents.familiaux,
@@ -126,18 +128,18 @@ export default function Page() {
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
-      console.log("je suis la")
+      console.log("je suis la");
       setError(null);
       setIsSaving(true);
-       // Upload the file to Supabase
-    if (fullData.fichier_joint) {
-      const uploadResult = await uploadFile(fullData.fichier_joint);
-      if (uploadResult.error) {
-        throw new Error('File upload failed');
+      // Upload the file to Supabase
+      if (fullData.fichier_joint) {
+        const uploadResult = await uploadFile(fullData.fichier_joint);
+        if (uploadResult.error) {
+          throw new Error("File upload failed");
+        }
+        //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
       }
-    //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
-    }
-     // await createPatient(fullData);
+      // await createPatient(fullData);
       reset();
       setStep(0);
     } catch (err: any) {
