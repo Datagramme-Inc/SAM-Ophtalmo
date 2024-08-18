@@ -20,8 +20,8 @@ export async function createPatient(patient: PatientCompletFormValues) {
     .select("*")
     .eq("telephone", phone);
   if (!aux.data?.length) throw new Error("Non connecte");
-
-  const db_patient = { ...patient, medecin_id: aux.data[0].id };
+  console.log(patient)
+  const db_patient = { ...patient, auxiliaire_id: aux.data[0].id };
   console.log("saving...", db_patient);
   const { error } = await supabase.from("patients").insert([db_patient]);
 

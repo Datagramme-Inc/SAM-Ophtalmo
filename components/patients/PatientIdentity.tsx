@@ -142,36 +142,22 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({
           name="age"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Age</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP", { locale: fr })
-                      ) : (
-                        <span>Choisir une date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value || new Date()}
-                    onSelect={field.onChange}
-                    locale={fr}
-                    captionLayout="dropdown"
-                  />
-                </PopoverContent>
-              </Popover>
+              <FormLabel>Âge</FormLabel>
+              <FormControl>
+                <input
+                  type="number"
+                  id="age"
+                  min="0"
+                  max="120"
+                  value={field.value !== undefined ? String(field.value) : ''}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  placeholder="Entrez votre âge"
+                  className={cn(
+                    "w-[50px] p-3 border border-gray-300 rounded-md text-left font-normal",
+                    !field.value && "text-muted-foreground"
+                  )}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
