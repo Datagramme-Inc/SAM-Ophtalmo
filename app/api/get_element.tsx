@@ -16,14 +16,18 @@ export const GetallAuxiliaire = async (id_medecin: any) => {
   }
 };
 
-export async function getPatients() {
-  const supabase = createClient();
-  const { data, error } = await supabase.from("patients").select("*");
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data;
-}
+// export async function getPatients() {
+//   console.log("triggered");
+//   const supabase = createClient();
+//   const { data: user } = await supabase.auth.getUser();
+//   console.log(user);
+
+//   const { data, error } = await supabase.from("patients").select("*");
+//   if (error) {
+//     throw new Error(error.message);
+//   }
+//   return data;
+// }
 
 export async function getPatient(id: string) {
   const supabase = createClient();

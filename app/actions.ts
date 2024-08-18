@@ -38,9 +38,17 @@ export async function createPatient(patient: PatientCompletFormValues) {
 export async function getPatients() {
   const user = await getUser();
   if (!user) throw new Error("Unauthorized not found");
-  const { data, error } = await supabase.from("patients").select("*");
+
+  const { data, error } = await supabase
+    .from("patients")
+    .select("*, auxiliaire (id_medecin)")
+    .eq("auxiliaire.id_medecin", user.id);
+
   if (error) {
-    throw new Error(error.message);
+    console.log(error);
+    return [];
   }
+
+  console.log(data);
   return data;
 }
