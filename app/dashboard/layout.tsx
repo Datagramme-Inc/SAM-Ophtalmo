@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import Sidebar from "@/components/sidebar";
 import { Currentuser } from "../api/query";
 import Adminsidebar from "@/components/adminsidebar";
+import Navadmin from "@/components/Navadmin";
 
 export default async function Layout({
   children,
@@ -19,7 +20,12 @@ export default async function Layout({
       )}
 
       <div className="flex w-full flex-col">
+      {user?.user_metadata?.role == "admin" ? (
+        <Navadmin></Navadmin>
+      ) : (
         <Nav></Nav>
+      )}
+       
 
         <div className=" w-full h-screen">{children}</div>
       </div>
