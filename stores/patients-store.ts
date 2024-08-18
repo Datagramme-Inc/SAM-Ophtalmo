@@ -23,19 +23,19 @@ export const defaultPatient: PatientStore = {
   antecedents: {
     familiaux: {
       autres: "",
-      cecite: false,
-      gpao: false,
+      cecite: "false",
+      gpao: "false",
     },
     personnels: {
       traitement: "",
-      addiction: false,
+      addiction: "false",
       type_addiction: "",
       autres: "",
       pathologie_ophtalmologique: "",
-      atopie: false,
-      diabete: false,
-      drepanocytose: false,
-      hta: false,
+      atopie: "false",
+      diabete: "false",
+      drepanocytose: "false",
+      hta: "false",
     },
   },
 
