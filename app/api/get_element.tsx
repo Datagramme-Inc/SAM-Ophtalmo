@@ -3,11 +3,16 @@ import { redirect } from "next/navigation";
 
 export const revalidate = 0;
 
-export const GetallAuxiliaire = async (id_medecin: any) => {
+export const GetallAuxiliaire = async () => {
   const supabase = createClient();
+  const { data: user } = await supabase.auth.getUser();
+  if (!user || !user.user) throw new Error("Unauthorized not found");
+  if (user.user.user_metadata?.role === "auxiliaire") return [];
   try {
-    const { data } = await supabase.from("auxiliaire").select("*");
-    // .eq("admin_principal_id", id_medecin);
+    const { data } = await supabase
+      .from("auxiliaire")
+      .select("*")
+      .eq("id_medecin", user.user?.id);
     // console.log(data);
     return data;
   } catch (error) {
