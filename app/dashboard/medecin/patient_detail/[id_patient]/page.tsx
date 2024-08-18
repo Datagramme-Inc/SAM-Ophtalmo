@@ -160,12 +160,14 @@ async function page({ params }: { params: { id_patient: string } }) {
           <AccordionTrigger>Retinographie </AccordionTrigger>
           <AccordionContent>
             <div className="flex justify-center my-4">
-              <Image
-                src="/ima.png"
-                width={250}
-                height={250}
-                alt="Picture of the author"
-              />
+              {patient.fichier_joint ? (
+                <Image
+                  src={patient.fichier_joint}
+                  width={250}
+                  height={250}
+                  alt="Fichier joint"
+                />
+              ) : null}
             </div>
           </AccordionContent>
         </AccordionItem>
@@ -207,53 +209,67 @@ async function page({ params }: { params: { id_patient: string } }) {
                   </tr>
                 </tbody>
               </table>
-              <p className="text-base font-bold">Réfraction automatisée </p>
+
+              {/* Regraction automatisee */}
+              <p className="text-base font-bold">
+                Réfraction automatisée (Oeil gauche)
+              </p>
               <table className="min-w-full bg-white border border-gray-300">
                 <tbody>
                   <tr className="border-t">
                     <td className="px-4 py-2 text-sm border-r text-gray-600">
                       A{" "}
                     </td>
-                    <td className="px-4 py-2 text-sm text-gray-600">150°</td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.refraction_automatisee_a}°
+                    </td>
                   </tr>
                   <tr className="border-t bg-gray-50">
                     <td className="px-4 py-2 text-sm text-gray-600 border-r">
                       S
                     </td>
                     <td className="px-4 py-2 text-sm text-gray-600">
-                      +15,4 dioptrie
+                      {patient.refraction_automatisee_s}
                     </td>
                   </tr>
                   <tr className="border-t">
                     <td className="px-4 py-2 text-sm text-gray-600 border-r">
                       C
                     </td>
-                    <td className="px-4 py-2 text-sm text-gray-600">-8.5</td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.refraction_automatisee_c}
+                    </td>
                   </tr>
                   <tr className="border-t">
                     <td className="px-4 py-2 text-sm text-gray-600 border-r">
                       DP
                     </td>
-                    <td className="px-4 py-2 text-sm text-gray-600">25 mm</td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.refraction_automatisee_dp} mm
+                    </td>
                   </tr>
                   <tr className="border-t">
                     <td className="px-4 py-2 text-sm text-gray-600 border-r">
                       Tonus oculaire{" "}
                     </td>
-                    <td className="px-4 py-2 text-sm text-gray-600">15 mmHg</td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.tonus_oculaire} mmHg
+                    </td>
                   </tr>
                   <tr className="border-t">
                     <td className="px-4 py-2 text-sm text-gray-600 border-r">
                       Pachymétrie{" "}
                     </td>
-                    <td className="px-4 py-2 text-sm text-gray-600">3 µm</td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.pachymetrie} µm
+                    </td>
                   </tr>
                   <tr className="border-t">
                     <td className="px-4 py-2 text-sm text-gray-600 border-r">
                       C/D{" "}
                     </td>
                     <td className="px-4 py-2 text-sm text-gray-600">
-                      47.7 mmHg
+                      {patient.cd} mmHg
                     </td>
                   </tr>
                   <tr className="border-t">
@@ -261,7 +277,79 @@ async function page({ params }: { params: { id_patient: string } }) {
                       Traitement hypotonisant oculaire{" "}
                     </td>
                     <td className="px-4 py-2 text-sm text-gray-600">
-                      Colir - Dh785 - Anti lumieres bleux etc..
+                      {patient.traitement_hypotonisant_oculaire}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p className="text-base font-bold">
+                Réfraction automatisée (Oeil droit)
+              </p>
+              <table className="min-w-full bg-white border border-gray-300">
+                <tbody>
+                  <tr className="border-t">
+                    <td className="px-4 py-2 text-sm border-r text-gray-600">
+                      A{" "}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.refraction_automatisee_a_d}°
+                    </td>
+                  </tr>
+                  <tr className="border-t bg-gray-50">
+                    <td className="px-4 py-2 text-sm text-gray-600 border-r">
+                      S
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.refraction_automatisee_s_d}
+                    </td>
+                  </tr>
+                  <tr className="border-t">
+                    <td className="px-4 py-2 text-sm text-gray-600 border-r">
+                      C
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.refraction_automatisee_c_d}
+                    </td>
+                  </tr>
+                  <tr className="border-t">
+                    <td className="px-4 py-2 text-sm text-gray-600 border-r">
+                      DP
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.refraction_automatisee_dp_d} mm
+                    </td>
+                  </tr>
+                  <tr className="border-t">
+                    <td className="px-4 py-2 text-sm text-gray-600 border-r">
+                      Tonus oculaire{" "}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.tonus_oculaire_d} mmHg
+                    </td>
+                  </tr>
+                  <tr className="border-t">
+                    <td className="px-4 py-2 text-sm text-gray-600 border-r">
+                      Pachymétrie{" "}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.pachymetrie_d} µm
+                    </td>
+                  </tr>
+                  <tr className="border-t">
+                    <td className="px-4 py-2 text-sm text-gray-600 border-r">
+                      C/D{" "}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.cd_d} mmHg
+                    </td>
+                  </tr>
+                  <tr className="border-t">
+                    <td className="px-4 py-2 text-sm text-gray-600 border-r">
+                      Traitement hypotonisant oculaire{" "}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-600">
+                      {patient.traitement_hypotonisant_oculaire_d}
                     </td>
                   </tr>
                 </tbody>
