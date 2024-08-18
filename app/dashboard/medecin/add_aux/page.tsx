@@ -24,14 +24,24 @@ export default function TaskPage() {
   const supabase = createClient();
 
   useEffect(() => {
-    Currentuser().then((data)=>setUser(data))
-    console.log(user)
-    console.log("subscribing");
-    GetallAuxiliaire(user?.id).then((data: any) =>{
-      console.log(data)
-      setAuxiliaire(data || [])
-    });
+    Currentuser()
+      .then((data) => {
+        setUser(data);
+        console.log({ user: data });
+        GetallAuxiliaire(data?.id)
+          .then((data: any) => {
+            console.log({ aux: data });
+            setAuxiliaire(data || []);
+          })
+          .catch((err) => {
+            console.error("error getting auxiliaire", err);
+          });
+      })
+      .catch((err) => {
+        console.error("error finding user", err);
+      });
 
+    console.log("subscribing");
     const channel = supabase
       .channel("schema-db-changes")
       .on(
@@ -94,13 +104,12 @@ export default function TaskPage() {
                 Cette liste represente l'ensemble des auxiliaires du médecin
               </p>
             </div>
-           
           </div>
         </div>
         <div className="bg-white mb-7 py-4 px-2 rounded-sm">
           <div className="flex flex-end mb-2 justify-end">
-              <AuxiliaireModal />
-            </div>
+            <AuxiliaireModal />
+          </div>
           <DataTable data={auxiliaire} columns={columns} />
         </div>
       </div>

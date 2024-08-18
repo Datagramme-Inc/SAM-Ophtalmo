@@ -50,19 +50,9 @@ export const createMedecin = async (data: MedecinFormValues) => {
   const supabase = createClient();
   // je crée d'abord le mail du medecin a partir de son téléphone
   // let mail=medecin.telephone+"@gmail.com"
-  const user=await Currentuser()
+  //const user=await Currentuser()
   let mail = `${data.phone}@gmail.com`;
   // je crée son profil
-  const db_Data: MedecinInDB = {
-    titre: data.title,
-    prenom: data.firstName,
-    nom: data.lastName,
-    service: data.service,
-    telephone: data.phone,
-    confirmer_telephone: data.repeatPhone,
-    admin_principal_id: MAIN_ADMIN,
-    medecin_id:user?.id
-  };
 
   try {
     // j'inscris le user d'abord ensuite je crée son profil
@@ -74,8 +64,19 @@ export const createMedecin = async (data: MedecinFormValues) => {
           role: "medecin",
         },
       },
-    });
-
+    })
+    console.log(user)
+    const db_Data: MedecinInDB = {
+      titre: data.title,
+      prenom: data.firstName,
+      nom: data.lastName,
+      service: data.service,
+      telephone: data.phone,
+      confirmer_telephone: data.repeatPhone,
+      admin_principal_id: MAIN_ADMIN,
+      medecin_id:user?.user?.id
+    };
+  
     const { error } = await supabase.from("medecin").insert([db_Data]);
     if (error) {
       throw error;
