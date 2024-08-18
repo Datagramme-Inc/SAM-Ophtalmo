@@ -15,15 +15,21 @@ export async function createPatient(patient: PatientCompletFormValues) {
   console.log(patient);
   const user = await getUser();
   if (!user) throw new Error("Unauthorized not found");
-  console.log(user);
+
   const phone = user.email ? user.email.split("@")[0] : null;
   const aux = await supabase
     .from("auxiliaire")
     .select("*")
     .eq("telephone", phone);
-  if (!aux.data?.length) throw new Error("Non connecte");
-  console.log(patient);
-  const db_patient = { ...patient, auxiliaire_id: aux.data[0].id };
+
+  const db_patient = {
+    ...patient,
+    auxiliaire_id: aux.data?.length ? aux.data[0].id : null,
+    id_medecin: "",
+  };
+  if (user.user_metadata.role === "medecin") {
+    db_patient.id_medecin = user.id;
+  }
   console.log("saving...", db_patient);
   const { error } = await supabase.from("patients").insert([db_patient]);
 
@@ -46,11 +52,16 @@ export async function getPatients() {
     .select("*, auxiliaire (id_medecin)")
     .eq("auxiliaire.id_medecin", user.id);
 
-  if (error) {
-    console.log(error);
+  const { data: otherData, error: otherError } = await supabase
+    .from("patients")
+    .select("*")
+    .eq("id_medecin", user.id);
+
+  if (error || otherError) {
+    console.error(error);
+    console.error(otherError);
     return [];
   }
 
-  console.log(data);
-  return data;
+  return [...data, ...otherData];
 }
