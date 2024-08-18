@@ -44,14 +44,14 @@ export const ConstantesTraitementForm: React.FC<
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 grid md:grid-cols-3 grid-cols-2 content-around gap-4"
+        className="space-y-8 grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 content-around gap-4"
         id="constantes-traitement"
       >
         <FormField
           control={form.control}
           name="acuite_visuelle_correction"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="md:col-span-3 sm:col-span-2 flex gap-2 items-baseline">
               <FormLabel>Acuité Visuelle (Correction)</FormLabel>
               <FormControl>
                 <Checkbox
@@ -64,8 +64,6 @@ export const ConstantesTraitementForm: React.FC<
           )}
         />
 
-    
-
         <FormField
           control={form.control}
           name="og"
@@ -73,13 +71,20 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>OG</FormLabel>
               <FormControl>
-                <DecimalInput value={field.value} onChange={field.onChange} />
+                <DecimalInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  min={0}
+                  max={10}
+                  customDecimalOptions={[
+                    0, 0.25, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                  ]}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
 
         <FormField
           control={form.control}
@@ -88,7 +93,12 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Réfraction Automatisée A (0 - 180°)</FormLabel>
               <FormControl>
-                <DecimalInput value={field.value} onChange={field.onChange} />
+                <DecimalInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  min={0}
+                  max={180}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -102,7 +112,12 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Réfraction Automatisée S (-20 - 20)</FormLabel>
               <FormControl>
-                <DecimalInput value={field.value} onChange={field.onChange} />
+                <DecimalInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  min={-20}
+                  max={20}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -116,7 +131,12 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Réfraction Automatisée C (-10 - 10)</FormLabel>
               <FormControl>
-                <DecimalInput value={field.value} onChange={field.onChange} />
+                <DecimalInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  min={-10}
+                  max={10}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -130,7 +150,12 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Réfraction Automatisée DP (0 - 100)</FormLabel>
               <FormControl>
-                <DecimalInput value={field.value} onChange={field.onChange} />
+                <DecimalInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  min={0}
+                  max={100}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,7 +169,8 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>Tonus Oculaire</FormLabel>
               <FormControl>
-                <DecimalInput value={field.value} onChange={field.onChange} />
+                <Input type="number" {...field} />
+                {/* <DecimalInput value={field.value} onChange={field.onChange} /> */}
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -172,7 +198,13 @@ export const ConstantesTraitementForm: React.FC<
             <FormItem>
               <FormLabel>CD</FormLabel>
               <FormControl>
-                <DecimalInput value={field.value} onChange={field.onChange} />
+                <DecimalInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  min={0}
+                  max={200}
+                  maxDecimals={1}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

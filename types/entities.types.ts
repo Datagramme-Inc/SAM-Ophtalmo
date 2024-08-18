@@ -1,5 +1,6 @@
 import { AntecedentsCompletFormValues } from "./antecedents.types";
 import { ConstantesTraitementFormValues } from "./constantes-traitement.types";
+import { ObservationsFormValues } from "./observations.types";
 import { PatientFormValues } from "./patient-identity.types";
 import { RetinographieFormValues } from "./retinographie.types";
 
@@ -80,12 +81,15 @@ export interface Patient {
   profession: string;
   telephone: string;
   confirmer_telephone: string;
-  observation: string;
-  pas_glaucome_reevaluation: boolean;
-  risque_glaucome_examens: boolean;
   gpao: boolean;
   date_creation: Date;
   date_modification: Date;
+}
+
+export interface Observations {
+  observation: string;
+  pas_glaucome_reevaluation: boolean;
+  risque_glaucome_examens: boolean;
 }
 
 // Antecedents Personnels
@@ -142,9 +146,11 @@ export type PatientComplet = {} & Patient &
   AntecedentsPersonnels &
   AntecedentsFamiliaux &
   Retinographie &
-  ConstantesTraitement;
+  ConstantesTraitement &
+  Observations;
 
 export type PatientCompletFormValues = PatientFormValues &
   AntecedentsCompletFormValues &
   ConstantesTraitementFormValues &
-  RetinographieFormValues;
+  RetinographieFormValues &
+  ObservationsFormValues;

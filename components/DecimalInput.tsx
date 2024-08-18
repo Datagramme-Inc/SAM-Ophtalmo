@@ -1,52 +1,85 @@
 import React from "react";
-import { Input, InputProps } from "@/components/ui/input";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
-interface DecimalInputProps
-  extends Omit<InputProps, "name" | "onChange" | "value"> {
+interface DecimalInputProps {
   value: number;
   onChange: (value: string) => void;
   maxDecimals?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  customDecimalOptions?: number[];
 }
+
+const generateOptions = (min: number, max: number, step: number) => {
+  const options = [];
+  for (let i = min; i <= max; i += step) {
+    options.push(i);
+  }
+  return options;
+};
 
 const DecimalInput: React.FC<DecimalInputProps> = ({
   value,
   onChange,
   maxDecimals = 2,
-  ...props
+  min = -10,
+  max = 10,
+  step = 1,
+  customDecimalOptions = [],
 }) => {
   const [integerPart, decimalPart] = String(value || "0.0").split(".");
 
-  const handleIntegerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value + (decimalPart ? `.${decimalPart}` : "");
-    onChange(newValue);
+  const handleIntegerChange = (newValue: string) => {
+    onChange(newValue + (decimalPart ? `.${decimalPart}` : ""));
   };
 
-  const handleDecimalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = `${integerPart || "0"}.${e.target.value}`;
-    onChange(newValue);
+  const handleDecimalChange = (newValue: string) => {
+    onChange(`${integerPart || "0"}.${newValue}`);
   };
+
+  const integerOptions = generateOptions(min, max, step);
+  const decimalOptions =
+    customDecimalOptions.length > 0
+      ? customDecimalOptions
+      : generateOptions(0, Math.max(0, max), 1);
 
   return (
     <div className="flex">
-      <Input
-        {...props}
-        type="text"
-        inputMode="numeric"
-        // pattern="\d*"
-        title="Please enter a valid integer"
-        value={integerPart || ""}
-        onChange={handleIntegerChange}
-      />
+      <Select onValueChange={handleIntegerChange} value={integerPart || ""}>
+        <SelectTrigger className="w-[100px]">
+          <SelectValue placeholder="0" />
+        </SelectTrigger>
+        <SelectContent>
+          {integerOptions.map((option) => (
+            <SelectItem key={option} value={String(option)}>
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       <span className="mx-1 text-4xl">.</span>
-      <Input
-        {...props}
-        type="text"
-        inputMode="decimal"
-        // pattern={`\\d{0,${maxDecimals}}`}
-        title={`Please enter up to ${maxDecimals} decimals`}
-        value={decimalPart || ""}
-        onChange={handleDecimalChange}
-      />
+      <Select onValueChange={handleDecimalChange} value={decimalPart || ""}>
+        <SelectTrigger className="w-[100px]">
+          <SelectValue placeholder="00" />
+        </SelectTrigger>
+        <SelectContent>
+          {decimalOptions.map((option) => (
+            <SelectItem
+              key={option}
+              value={String(option).padStart(maxDecimals, "0")}
+            >
+              {String(option).padStart(maxDecimals, "0")}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 };
