@@ -1,8 +1,9 @@
 import { createClient } from "@/utils/supabase/client";
+import { redirect } from "next/navigation";
 
 export const revalidate = 0;
 
-export const GetallAuxiliaire = async (id_medecin: string) => {
+export const GetallAuxiliaire = async (id_medecin: any) => {
   const supabase = createClient();
   try {
     const { data } = await supabase
@@ -37,3 +38,24 @@ export async function getPatient(id: string) {
   }
   return data.length > 0 ? data[0] : null;
 }
+
+export async function getMedecin(id_medecin:string) {
+  const supabase = createClient();
+  try {
+    const { data } = await supabase
+      .from("auxiliaire")
+      .select("*")
+      .eq("medecin_id", id_medecin);
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw "No auxiliaire present";
+  }
+}
+
+export const signOut = async () => {
+  const supabase = createClient();
+  await supabase.auth.signOut();
+  redirect("/login");
+};

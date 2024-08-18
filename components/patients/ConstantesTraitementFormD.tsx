@@ -13,25 +13,25 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  ConstantesTraitementFormValues,
-  constantesTraitementSchema,
+  ConstantesTraitementFormValuesD,
+  constantesTraitementSchemaD,
 } from "@/types/constantes-traitement.types";
 import DecimalInput from "../DecimalInput";
 
 type ConstantesTraitementFormProps = {
   nextFn: () => void;
-  setFn: (data: ConstantesTraitementFormValues) => void;
-  initValues: ConstantesTraitementFormValues;
+  setFn: (data: ConstantesTraitementFormValuesD) => void;
+  initValues: ConstantesTraitementFormValuesD;
 };
 
-export const ConstantesTraitementForm: React.FC<
+export const ConstantesTraitementFormD: React.FC<
   ConstantesTraitementFormProps
 > = ({ nextFn, setFn, initValues }) => {
-  const form = useForm<ConstantesTraitementFormValues>({
-    resolver: zodResolver(constantesTraitementSchema),
+  const form = useForm<ConstantesTraitementFormValuesD>({
+    resolver: zodResolver(constantesTraitementSchemaD),
   });
 
-  const onSubmit = (data: ConstantesTraitementFormValues) => {
+  const onSubmit = (data: ConstantesTraitementFormValuesD) => {
     setFn(data);
     nextFn();
   };
@@ -64,14 +64,12 @@ export const ConstantesTraitementForm: React.FC<
           )}
         />
 
-    
-
         <FormField
           control={form.control}
-          name="og"
+          name="od"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>OG</FormLabel>
+              <FormLabel>OD</FormLabel>
               <FormControl>
                 <DecimalInput value={field.value} onChange={field.onChange} />
               </FormControl>
@@ -80,6 +78,21 @@ export const ConstantesTraitementForm: React.FC<
           )}
         />
 
+       
+
+        <FormField
+          control={form.control}
+          name="odg"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ODG</FormLabel>
+              <FormControl>
+                <DecimalInput value={field.value} onChange={field.onChange} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}

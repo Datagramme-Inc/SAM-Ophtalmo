@@ -3,6 +3,7 @@ import { AuxiliaireFormValues } from "@/components/auxiliaireModal";
 import { MedecinFormValues } from "@/components/medecinmodal";
 import { MAIN_ADMIN } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 // import {Medecin} from'@/types/entities.types';
 
 export const Currentuser = async () => {
@@ -30,6 +31,7 @@ type MedecinInDB = {
   service: string;
   telephone: string;
   admin_principal_id: string;
+  medecin_id:string | undefined
   confirmer_telephone: string;
 };
 
@@ -48,6 +50,7 @@ export const createMedecin = async (data: MedecinFormValues) => {
   const supabase = createClient();
   // je crée d'abord le mail du medecin a partir de son téléphone
   // let mail=medecin.telephone+"@gmail.com"
+  const user=await Currentuser()
   let mail = `${data.phone}@gmail.com`;
   // je crée son profil
   const db_Data: MedecinInDB = {
@@ -58,6 +61,7 @@ export const createMedecin = async (data: MedecinFormValues) => {
     telephone: data.phone,
     confirmer_telephone: data.repeatPhone,
     admin_principal_id: MAIN_ADMIN,
+    medecin_id:user?.id
   };
 
   try {
@@ -113,6 +117,7 @@ export const createAuxiliaire = async (data: AuxiliaireFormValues) => {
   if (data.phone !== data.repeatPhone)
     throw new Error("Les numéros de téléphone ne correspondent pas");
   const supabase = createClient();
+  const medecin=await Currentuser()
   // je crée d'abord le mail du medecin a partir de son téléphone
   // let mail=medecin.telephone+"@gmail.com"
   let mail = `${data.phone}@gmail.com`;
@@ -123,8 +128,11 @@ export const createAuxiliaire = async (data: AuxiliaireFormValues) => {
     service: data.service,
     telephone: data.phone,
     confirmer_telephone: data.repeatPhone,
-    admin_principal_id: MAIN_ADMIN,
+   // admin_principal_id: MAIN_ADMIN,
+   admin_principal_id: medecin?.id || "NA"
+   
   };
+  console.log(db_Data)
 
   try {
     // j'inscris le user d'abord ensuite je crée son profil
@@ -148,3 +156,5 @@ export const createAuxiliaire = async (data: AuxiliaireFormValues) => {
     throw error;
   }
 };
+
+

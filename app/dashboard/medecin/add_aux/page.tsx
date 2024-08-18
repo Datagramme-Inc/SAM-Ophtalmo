@@ -7,9 +7,12 @@ import { Auxiliaire } from "@/types/entities.types";
 import { createClient } from "@/utils/supabase/client";
 import { MAIN_ADMIN } from "@/utils/constants";
 import { ColumnDef } from "@tanstack/react-table";
+import { User } from "@supabase/supabase-js";
+import { Currentuser } from "@/app/api/query";
 
 export default function TaskPage() {
   const [auxiliaire, setAuxiliaire] = useState<Auxiliaire[]>([]);
+  const [user, setUser] = useState<User | null | undefined>();
   const handleInsert = (payload: any) => {
     console.log(payload.new);
     setAuxiliaire((oldAuxiliaire) => [
@@ -21,8 +24,13 @@ export default function TaskPage() {
   const supabase = createClient();
 
   useEffect(() => {
+    Currentuser().then((data)=>setUser(data))
+    console.log(user)
     console.log("subscribing");
-    GetallAuxiliaire(MAIN_ADMIN).then((data: any) => setAuxiliaire(data || []));
+    GetallAuxiliaire(user?.id).then((data: any) =>{
+      console.log(data)
+      setAuxiliaire(data || [])
+    });
 
     const channel = supabase
       .channel("schema-db-changes")

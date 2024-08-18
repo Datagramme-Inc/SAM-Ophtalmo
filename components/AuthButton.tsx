@@ -1,34 +1,40 @@
-"use server";
+//import { createClient } from "@/utils/supabase/server";
+'use client'
 import { Currentuser } from "@/app/api/query";
 import { createClient } from "@/utils/supabase/client";
-import { redirect } from "next/navigation";
+import { User } from "@supabase/supabase-js";
+import { useRouter } from 'next/navigation'
+import { useEffect,useState } from "react";
 
-export default async function AuthButton() {
-  const supabase = createClient();
-  const user = await Currentuser();
+export default  function AuthButton() {
+ const supabase = createClient();
+ const router = useRouter()
+ const [user, setUser] = useState<User | null | undefined>();
 
+ useEffect( () => {
+  
+    Currentuser().then((data)=>setUser(data))
+    console.log(user)
+ }, [])
+ 
   const signOut = async () => {
+    
     await supabase.auth.signOut();
-    redirect("/login");
+    return router.replace("/login");
   };
 
-  // The signOut function is directly called here on the server-side
-  const handleSignOut = async () => {
-    "use server";
-    await signOut();
-  };
+ 
 
-  return user ? (
+
+
+   return user ? (
     <div className="flex items-center gap-4">
-      {user.email?.replace("@gmail.com", "")}
-      <form action={handleSignOut}>
-        <button
-          type="submit"
-          className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-        >
+      
+      
+        <button onClick={signOut} type="submit" className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
           Déconnexion
         </button>
-      </form>
+      
     </div>
-  ) : null;
+  ) : null; 
 }
