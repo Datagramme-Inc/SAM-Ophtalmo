@@ -12,7 +12,6 @@ import { Currentuser } from "@/app/api/query";
 
 export default function TaskPage() {
   const [auxiliaire, setAuxiliaire] = useState<Auxiliaire[]>([]);
-  const [user, setUser] = useState<User | null | undefined>();
   const handleInsert = (payload: any) => {
     console.log(payload.new);
     setAuxiliaire((oldAuxiliaire) => [
@@ -24,21 +23,13 @@ export default function TaskPage() {
   const supabase = createClient();
 
   useEffect(() => {
-    Currentuser()
-      .then((data) => {
-        setUser(data);
-        console.log({ user: data });
-        GetallAuxiliaire(data?.id)
-          .then((data: any) => {
-            console.log({ aux: data });
-            setAuxiliaire(data || []);
-          })
-          .catch((err) => {
-            console.error("error getting auxiliaire", err);
-          });
+    GetallAuxiliaire()
+      .then((data: any) => {
+        console.log({ aux: data });
+        setAuxiliaire(data || []);
       })
       .catch((err) => {
-        console.error("error finding user", err);
+        console.error("error getting auxiliaire", err);
       });
 
     console.log("subscribing");

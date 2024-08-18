@@ -2,9 +2,9 @@ import Cardstat from "@/components/Cardstat";
 import { DataTable } from "@/components/patient_table/data-table";
 import { columns } from "@/components/patient_table/column";
 import { Patient } from "@/types/entities.types";
-import { getPatients } from "@/app/api/get_element";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getPatients } from "@/app/actions";
 
 export default async function Home() {
   const data: Patient[] = await getPatients();
