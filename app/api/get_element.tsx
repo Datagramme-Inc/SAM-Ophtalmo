@@ -6,10 +6,8 @@ export const revalidate = 0;
 export const GetallAuxiliaire = async (id_medecin: any) => {
   const supabase = createClient();
   try {
-    const { data } = await supabase
-      .from("auxiliaire")
-      .select("*")
-      .eq("admin_principal_id", id_medecin);
+    const { data } = await supabase.from("auxiliaire").select("*");
+    // .eq("admin_principal_id", id_medecin);
     // console.log(data);
     return data;
   } catch (error) {
@@ -39,7 +37,7 @@ export async function getPatient(id: string) {
   return data.length > 0 ? data[0] : null;
 }
 
-export async function getMedecin(id_medecin:string) {
+export async function getMedecin(id_medecin: string) {
   const supabase = createClient();
   try {
     const { data } = await supabase
