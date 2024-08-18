@@ -22,6 +22,7 @@ import { uploadfile } from "@/app/api/query";
 import { createClient } from "@/utils/supabase/client";
 import { createPatient } from "../actions";
 import { ConstantesTraitementFormD } from "@/components/patients/ConstantesTraitementFormD";
+import ObservationsForm from "@/components/patients/ObservationsForm";
 //import { createClient } from "@supabase/supabase-js";
 
 export default function Page() {
@@ -39,16 +40,18 @@ export default function Page() {
     if (step === 0) return;
     setStep((prev) => prev - 1);
   }
-  async function uploadFile(file:any) {
+  async function uploadFile(file: any) {
     const supabase = createClient();
-    const { data, error } = await supabase.storage.from('samophtalmo').upload(`${file.name}`, file);
-  
+    const { data, error } = await supabase.storage
+      .from("samophtalmo")
+      .upload(`${file.name}`, file);
+
     if (error) {
-      console.error('Error uploading file:', error);
+      console.error("Error uploading file:", error);
       return { error };
     }
-  
-    console.log('File uploaded successfully:', data);
+
+    console.log("File uploaded successfully:", data);
     return { data };
   }
 
@@ -63,6 +66,8 @@ export default function Page() {
     constantes_traitement,
     constantes_traitementD,
     retinographie,
+    observations,
+    setObservations,
     reset,
   } = usePatientStore();
 
@@ -89,7 +94,7 @@ export default function Page() {
       ),
       id: "antecedents-form",
     },
-   
+
     {
       title: "Constantes et Traitement OG (Oeil Gauche )",
       body: (
@@ -102,7 +107,7 @@ export default function Page() {
       id: "constantes-traitement",
     },
     {
-      title: "Constantes et Traitement OD (Oeil Droite )",
+      title: "Constantes et Traitement OD (Oeil Droit)",
       body: (
         <ConstantesTraitementFormD
           nextFn={handleNextStep}
@@ -124,6 +129,17 @@ export default function Page() {
       id: "retinographie",
     },
     {
+      title: "Oberservations",
+      body: (
+        <ObservationsForm
+          nextFn={handleNextStep}
+          setFn={setObservations}
+          initValues={observations}
+        />
+      ),
+      id: "observations-form",
+    },
+    {
       title: "Valider",
       body: null,
       id: "valider",
@@ -140,24 +156,25 @@ export default function Page() {
       ...retinographie,
       ...constantes_traitement,
       ...constantes_traitementD,
+      ...observations,
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
-      console.log("je suis la")
+      console.log("je suis la");
       setError(null);
       setIsSaving(true);
-       // Upload the file to Supabase
-    if (fullData.fichier_joint) {
-      const uploadResult = await uploadFile(fullData.fichier_joint);
-      if (uploadResult.error) {
-        throw new Error('File upload failed');
+      // Upload the file to Supabase
+      if (fullData.fichier_joint) {
+        const uploadResult = await uploadFile(fullData.fichier_joint);
+        if (uploadResult.error) {
+          throw new Error("File upload failed");
+        }
+        //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
+        delete fullData.fichier_joint;
       }
-    //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
-    delete fullData.fichier_joint;
-    }
-    console.log("test")
-    console.log(fullData)
-   // const plainObject = { ...fullData };  
+      console.log("test");
+      console.log(fullData);
+      // const plainObject = { ...fullData };
       await createPatient(fullData);
       reset();
       setStep(0);
@@ -170,8 +187,6 @@ export default function Page() {
 
   return (
     <div className="w-full container pt-16 ">
-    
-
       <div className="flex flex-col mt-8 w-full h-full justify-center items-center lg:items-start">
         <Card className="w-auto lg:w-full">
           <CardHeader>
