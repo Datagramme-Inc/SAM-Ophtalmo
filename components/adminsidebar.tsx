@@ -7,7 +7,7 @@ import { BedDoubleIcon, Book, LogOut, Settings, UserRound } from "lucide-react"
 export default  function Adminsidebar() {
   const pathname = usePathname()
   return (
-    <div className="w-72  flex flex-col justify-between bg-[#ecf2f3] dark:bg-gray-800">
+    <div className="lg:w-72 hidden  md:flex md:flex-col md:justify-between bg-[#ecf2f3] dark:bg-gray-800">
     <div className="flex h-[59.5px] items-center  px-6 bg-white">
       <Link className="flex items-center gap-2 font-semibold" href="/dashboard/accueil">
         
