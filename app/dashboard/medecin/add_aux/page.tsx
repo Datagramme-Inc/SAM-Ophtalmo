@@ -1,45 +1,77 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
-import { columns } from "@/components/proprio_table/column";
 import { DataTable } from "@/components/proprio_table/data-table";
 import { AuxiliaireModal } from "@/components/auxiliaireModal";
 import { GetallAuxiliaire } from "@/app/api/get_element";
 import { Auxiliaire } from "@/types/entities.types";
 import { createClient } from "@/utils/supabase/client";
-
+import { MAIN_ADMIN } from "@/utils/constants";
+import { ColumnDef } from "@tanstack/react-table";
 
 export default function TaskPage() {
-
-  const [auxiliaire, setAuxiliaire] = useState<Auxiliaire[]>([]); 
-  const handleInsert=(payload :any)=>{
-    console.log(payload.new)
-    setAuxiliaire((oldAuxiliaire) => [...oldAuxiliaire, payload.new as Auxiliaire]);
-    
-  }
+  const [auxiliaire, setAuxiliaire] = useState<Auxiliaire[]>([]);
+  const handleInsert = (payload: any) => {
+    console.log(payload.new);
+    setAuxiliaire((oldAuxiliaire) => [
+      ...oldAuxiliaire,
+      payload.new as Auxiliaire,
+    ]);
+    console.log("after", auxiliaire.length);
+  };
   const supabase = createClient();
 
-
   useEffect(() => {
+    console.log("subscribing");
+    GetallAuxiliaire(MAIN_ADMIN).then((data: any) => setAuxiliaire(data || []));
 
-      GetallAuxiliaire("org_2dm3uHAD18iMU1TjVJJTywHa0Jv").then((data:any)=>setAuxiliaire(data))
+    const channel = supabase
+      .channel("schema-db-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "auxiliaire",
+        },
+        handleInsert
+      )
+      .subscribe();
 
-      const channel =  supabase.channel('Room_insert')
-        .on(
-          'postgres_changes',
-          {
-            event: 'INSERT',
-            schema: 'public',
-            table: 'room',
-          },
-          handleInsert,
-        )
-        .subscribe();
-
-      return  () => {
-         supabase.removeChannel(channel);
-      };
-    
+    return () => {
+      console.log("unsubscribing");
+      supabase.removeChannel(channel);
+    };
   }, [supabase]);
+
+  const columns: ColumnDef<any>[] = [
+    {
+      accessorKey: "id",
+      header: "ID",
+    },
+    {
+      accessorKey: "prenom",
+      header: "Prenom",
+    },
+    {
+      accessorKey: "nom",
+      header: "Nom",
+    },
+    {
+      accessorKey: "service",
+      header: "Service",
+    },
+    {
+      accessorKey: "telephone",
+      header: "Telephone",
+    },
+    {
+      accessorKey: "date_creation",
+      header: "Date Creation",
+      cell: (row) => {
+        return new Date(row.getValue() as string).toLocaleDateString();
+      },
+    },
+  ];
 
   return (
     <div className="bg-[#ecf2f3] h-full px-3 ">
@@ -47,9 +79,11 @@ export default function TaskPage() {
         <div className="flex items-center justify-between space-y-2">
           <div className="flex justify-between items-center w-full space-x-4">
             <div className="flex flex-col space-y-2">
-              <h2 className="lg:text-2xl text-base  font-bold tracking-normal w-full">Liste des Auxiliaires !</h2>
-              <p className="text-muted-foreground text-sm ">
-               Cette liste represente l'ensemble des auxiliaires du médecin
+              <h2 className="text-2xl font-bold tracking-normal">
+                Liste des Auxiliaires !
+              </h2>
+              <p className="text-muted-foreground">
+                Cette liste represente l'ensemble des auxiliaires du médecin
               </p>
             </div>
            

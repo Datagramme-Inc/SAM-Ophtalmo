@@ -9,7 +9,7 @@ export const GetallAuxiliaire = async (id_medecin: string) => {
       .from("auxiliaire")
       .select("*")
       .eq("admin_principal_id", id_medecin);
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);
