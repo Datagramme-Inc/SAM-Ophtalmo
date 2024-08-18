@@ -32,8 +32,6 @@ export const ConstantesTraitementForm: React.FC<
   });
 
   const onSubmit = (data: ConstantesTraitementFormValues) => {
-    console.log(data);
-    return;
     setFn(data);
     nextFn();
   };

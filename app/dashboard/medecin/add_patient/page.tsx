@@ -20,15 +20,15 @@ import { PatientCompletFormValues } from "@/types/entities.types";
 import { createClient } from "@/utils/supabase/client";
 import { createPatient } from "@/app/actions";
 import { randomUUID } from "crypto";
+import ObservationsForm from "@/components/patients/ObservationsForm";
 
 export default function Page() {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   function handleNextStep() {
     if (step === MAX_STEPS - 1) return;
-    console.log("dfdf");
     setStep((prev) => prev + 1);
   }
 
@@ -60,6 +60,8 @@ export default function Page() {
     antecedents,
     constantes_traitement,
     retinographie,
+    observations,
+    setObservations,
     reset,
   } = usePatientStore();
 
@@ -109,6 +111,17 @@ export default function Page() {
       id: "constantes-traitement",
     },
     {
+      title: "Oberservations",
+      body: (
+        <ObservationsForm
+          nextFn={handleNextStep}
+          setFn={setObservations}
+          initValues={observations}
+        />
+      ),
+      id: "observations-form",
+    },
+    {
       title: "Valider",
       body: null,
       id: "valider",
@@ -124,10 +137,10 @@ export default function Page() {
       ...antecedents.familiaux,
       ...retinographie,
       ...constantes_traitement,
+      ...observations,
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
-      console.log("je suis la");
       setError(null);
       setIsSaving(true);
       // Upload the file to Supabase

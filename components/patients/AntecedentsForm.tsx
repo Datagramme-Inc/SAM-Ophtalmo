@@ -10,7 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import {
@@ -54,180 +53,160 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
         id="antecedents-form"
       >
         <div className="flex gap-4 flex-wrap w-full justify-between">
-        <FormField control={form.control}
-          name="personnels.hta"
-          render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormLabel>HTA</FormLabel>
-              <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                 defaultValue="false"
-                  className="flex flex-col space-y-1"
-                >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="true" />
-                    </FormControl>
-                    <FormLabel className="font-normal">
-                     Oui
-                    </FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="false" />
-                    </FormControl>
-                    <FormLabel className="font-normal">
-                      Non
-                    </FormLabel>
-                  </FormItem>
-                 
-                </RadioGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-      <FormField control={form.control}
-          name="personnels.diabete"
-          render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormLabel>Diabète</FormLabel>
-              <FormControl>
-                <RadioGroup 
-                  onValueChange={field.onChange}
-                 defaultValue="false"
-                  className="flex flex-col space-y-1"
-                >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="true" />
-                    </FormControl>
-                    <FormLabel className="font-normal">
-                     Oui
-                    </FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="false" />
-                    </FormControl>
-                    <FormLabel className="font-normal">
-                      Non
-                    </FormLabel>
-                  </FormItem>
-                 
-                </RadioGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField control={form.control}
-                  name="personnels.atopie"
-                  render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel>Atopie</FormLabel>
+          <FormField
+            control={form.control}
+            name="personnels.hta"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>HTA</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue="false"
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                        defaultValue="false"
-                          className="flex flex-col space-y-1"
-                        >
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="true" />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                            Oui
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="false" />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              Non
-                            </FormLabel>
-                          </FormItem>
-                        
-                        </RadioGroup>
+                        <RadioGroupItem value="true" />
                       </FormControl>
-                      <FormMessage />
+                      <FormLabel className="font-normal">Oui</FormLabel>
                     </FormItem>
-                  )}
-                />
-
-        <FormField control={form.control}
-                  name="personnels.addiction"
-                  render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel>Addiction</FormLabel>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                        defaultValue="false"
-                          className="flex flex-col space-y-1"
-                        >
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="true" />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                            Oui
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="false" />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              Non
-                            </FormLabel>
-                          </FormItem>
-                        
-                        </RadioGroup>
+                        <RadioGroupItem value="false" />
                       </FormControl>
-                      <FormMessage />
+                      <FormLabel className="font-normal">Non</FormLabel>
                     </FormItem>
-                  )}
-                />
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField control={form.control}
-                      name="personnels.drepanocytose"
-                      render={({ field }) => (
-                        <FormItem className="space-y-3">
-                          <FormLabel>Drépanocytose</FormLabel>
-                          <FormControl>
-                            <RadioGroup
-                              onValueChange={field.onChange}
-                            defaultValue="false"
-                              className="flex flex-col space-y-1"
-                            >
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <RadioGroupItem value="true" />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                Oui
-                                </FormLabel>
-                              </FormItem>
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <RadioGroupItem value="false" />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                  Non
-                                </FormLabel>
-                              </FormItem>
-                            
-                            </RadioGroup>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+          <FormField
+            control={form.control}
+            name="personnels.diabete"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>Diabète</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue="false"
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="true" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Oui</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="false" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Non</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="personnels.atopie"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>Atopie</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue="false"
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="true" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Oui</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="false" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Non</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="personnels.addiction"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>Addiction</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue="false"
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="true" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Oui</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="false" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Non</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="personnels.drepanocytose"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>Drépanocytose</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue="false"
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="true" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Oui</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="false" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Non</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         {/* Champ conditionnel pour l'addiction */}
@@ -295,75 +274,67 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
         <h2 className="text-lg font-medium">Antécédents Familiaux</h2>
 
         <div className="flex flex-wrap gap-4">
-        <FormField control={form.control}
-                      name="familiaux.cecite"
-                      render={({ field }) => (
-                        <FormItem className="space-y-3">
-                          <FormLabel>Cécité</FormLabel>
-                          <FormControl>
-                            <RadioGroup
-                              onValueChange={field.onChange}
-                            defaultValue="false"
-                              className="flex flex-col space-y-1"
-                            >
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <RadioGroupItem value="true" />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                Oui
-                                </FormLabel>
-                              </FormItem>
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <RadioGroupItem value="false" />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                  Non
-                                </FormLabel>
-                              </FormItem>
-                            
-                            </RadioGroup>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+          <FormField
+            control={form.control}
+            name="familiaux.cecite"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>Cécité</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue="false"
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="true" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Oui</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="false" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Non</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-                  <FormField control={form.control}
-                      name="familiaux.gpao"
-                      render={({ field }) => (
-                        <FormItem className="space-y-3">
-                          <FormLabel>GPAO</FormLabel>
-                          <FormControl>
-                            <RadioGroup
-                              onValueChange={field.onChange}
-                            defaultValue="false"
-                              className="flex flex-col space-y-1"
-                            >
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <RadioGroupItem value="true" />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                Oui
-                                </FormLabel>
-                              </FormItem>
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <RadioGroupItem value="false" />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                  Non
-                                </FormLabel>
-                              </FormItem>
-                            
-                            </RadioGroup>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+          <FormField
+            control={form.control}
+            name="familiaux.gpao"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>GPAO</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue="false"
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="true" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Oui</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="false" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Non</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         <FormField

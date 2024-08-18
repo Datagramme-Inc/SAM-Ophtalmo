@@ -1,9 +1,7 @@
 "use client";
-
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -19,26 +17,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
-import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { REGIONS_SENEGAL } from "@/utils/constants";
-import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
-import { fr } from "date-fns/locale";
 import {
   PatientFormValues,
   patientSchema,
 } from "@/types/patient-identity.types";
-import { Checkbox } from "../ui/checkbox";
-import { Textarea } from "../ui/textarea";
 
 type PatientIdentityProps = {
   nextFn: () => void;
