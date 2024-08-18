@@ -139,6 +139,7 @@ export default function Page() {
       ...antecedents.familiaux,
       ...retinographie,
       ...constantes_traitement,
+      ...constantes_traitementD,
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
