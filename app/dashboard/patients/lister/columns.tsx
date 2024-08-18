@@ -20,13 +20,14 @@ export const columns: ColumnDef<Patient>[] = [
   {
     accessorKey: "sexe",
     header: "Sexe",
-    cell: ({ row }) => (row.original.sexe === Sexe.M ? "Masculin" : "Féminin"),
+    cell: ({ row }) =>
+      row.getValue("sexe") === Sexe.M ? "Masculin" : "Féminin",
   },
   {
     accessorKey: "age",
     header: "Âge",
     cell: ({ row }) => {
-      const birthDate = new Date(row.original.age);
+      const birthDate = new Date(row.getValue('age'));
       const age = new Date().getFullYear() - birthDate.getFullYear();
       return `${age} ans`;
     },
@@ -43,6 +44,6 @@ export const columns: ColumnDef<Patient>[] = [
     accessorKey: "date_enregistrement",
     header: "Date d'Enregistrement",
     cell: ({ row }) =>
-      format(row.original.date_enregistrement, "dd/MM/yyyy [à] HH:mm"),
+      format(row.getValue("date_enregistrement"), "dd/MM/yyyy [à] HH:mm"),
   },
 ];

@@ -1,30 +1,33 @@
-"use client"
+"use client";
 
-import { Cross2Icon } from "@radix-ui/react-icons"
-import { Table } from "@tanstack/react-table"
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { Table } from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { DataTableViewOptions } from "@/components/reservationtable/data-table-view-options"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+// import { DataTableViewOptions } from "@/components/reservationtable/data-table-view-options"
 
-import { priorities, statuses } from "./data/data"
-import { DataTableFacetedFilter } from "./data-table-faceted-filter"
+import { priorities, statuses } from "./data/data";
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>
+  table: Table<TData>;
 }
 
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0
+  const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Filter Booking ..."
-          value={(table.getColumn("reservation_id")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("reservation_id")?.getFilterValue() as string) ??
+            ""
+          }
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
@@ -37,7 +40,7 @@ export function DataTableToolbar<TData>({
             options={statuses}
           />
         )}
-        
+
         {isFiltered && (
           <Button
             variant="ghost"
@@ -49,7 +52,7 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table} />
+      {/* <DataTableViewOptions table={table} /> */}
     </div>
-  )
+  );
 }
