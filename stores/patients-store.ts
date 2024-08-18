@@ -54,7 +54,7 @@ export const defaultPatient: PatientStore = {
     traitement_hypotonisant_oculaire: "",
   },
   identite_patient: {
-    age: null,
+    age: 0,
     adresse: "",
     confirmer_telephone: "",
     no_fiche: "",
