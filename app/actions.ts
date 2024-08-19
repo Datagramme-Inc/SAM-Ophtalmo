@@ -2,9 +2,10 @@
 import { PatientCompletFormValues } from "@/types/entities.types";
 import { createClient } from "@/utils/supabase/server";
 
-const supabase = createClient();
+
 
 async function getUser() {
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -12,6 +13,7 @@ async function getUser() {
 }
 
 export async function createPatient(patient: PatientCompletFormValues) {
+  const supabase = createClient();
   console.log(patient);
   const user = await getUser();
   if (!user) throw new Error("Unauthorized not found");
@@ -42,6 +44,7 @@ export async function createPatient(patient: PatientCompletFormValues) {
 }
 
 export async function getPatients() {
+  const supabase = createClient();
   const user = await getUser();
   if (!user) throw new Error("Unauthorized not found");
 
