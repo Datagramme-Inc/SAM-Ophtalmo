@@ -26,6 +26,12 @@ import {
   PatientFormValues,
   patientSchema,
 } from "@/types/patient-identity.types";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
+import { Calendar } from "../ui/calendar";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns/format";
+
 
 type PatientIdentityProps = {
   nextFn: () => void;
@@ -72,7 +78,61 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({
             </FormItem>
           )}
         />
+          <FormField
+          control={form.control}
+          name="centre"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Centre ou site</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
+        <FormField  control={form.control}
+                  name="activite_date"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Date Activités</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "max-w-[150px] pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value,"PPP")
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
         <FormField
           control={form.control}
           name="nom"
