@@ -5,7 +5,6 @@ import { DataTable } from "@/components/proprio_table/data-table";
 import { Auxiliaire } from "@/types/entities.types";
 import { createClient } from "@/utils/supabase/client";
 import { MedecinModal } from "@/components/medecinmodal";
-import { getMedecins } from "@/app/api/query";
 import { ColumnDef } from "@tanstack/react-table";
 
 export default function Gestionmedecin({ initialMedecins }: { initialMedecins: Auxiliaire[] }) {
