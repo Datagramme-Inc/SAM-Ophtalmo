@@ -1,6 +1,7 @@
 "use server";
 import { AuxiliaireFormValues } from "@/components/auxiliaireModal";
 import { MedecinFormValues } from "@/components/medecinmodal";
+import { ObservationsFormValues } from "@/types/observations.types";
 import { MAIN_ADMIN } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -34,6 +35,7 @@ type MedecinInDB = {
   medecin_id: string | undefined;
   confirmer_telephone: string;
 };
+
 
 export const getMedecins = async () => {
   const supabase = createClient();
@@ -155,3 +157,28 @@ export const createAuxiliaire = async (data: AuxiliaireFormValues) => {
     throw error;
   }
 };
+type ObservationInDB={
+observation:string | undefined;
+pas_glaucome_reevaluation:boolean;
+risque_glaucome_examens:boolean;
+gpao_observation:boolean
+}
+
+export const UpdateObservation=async (Observation_type:ObservationsFormValues,patient_id:any)=>{
+  const supabase = createClient();
+  //  j'update les champs d'observations
+  const db_Data: ObservationInDB = {
+    observation:Observation_type.observation,
+    pas_glaucome_reevaluation:Observation_type.pas_glaucome_reevaluation,
+    risque_glaucome_examens:Observation_type.risque_glaucome_examens,
+    gpao_observation:Observation_type.gpao
+  };
+  const { data, error } = await supabase.from('patients').update([db_Data]).eq('id',patient_id)
+  
+  if (error) {
+    throw error;
+  }
+  console.log(data)
+  return data as any
+
+}

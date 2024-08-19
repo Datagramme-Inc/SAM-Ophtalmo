@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { PatientComplet, PatientCompletFormValues } from "@/types/entities.types";
+import { UpdateObservation } from "@/app/api/query";
 
  function page({ params }: { params: { id_patient: string } }) {
 
@@ -37,8 +38,12 @@ import { PatientComplet, PatientCompletFormValues } from "@/types/entities.types
   console.log(patient);
   if (!patient) return <div>Patient inexistant...</div>;
 
-  const onSubmit = (data: ObservationsFormValues) => {
-   console.log(data)
+  const onSubmit = async (data: ObservationsFormValues) => {
+    console.log(data)
+   await UpdateObservation(data,params.id_patient).then((data)=>{
+    console.log(data);
+   })
+   
   };
   return (
     <div className="container ">
@@ -48,16 +53,16 @@ import { PatientComplet, PatientCompletFormValues } from "@/types/entities.types
           <AccordionContent>
             <div className="grid md:grid-cols-3 grid-cols-2 gap-y-4">
               <div className="flex space-x-1 ">
-                <p className="text-sm font-sem">No Fiche:</p>
+                <p className="text-sm font-sem">No Fiche: </p>
                 <p className="text-sm">{patient.no_fiche || ""}</p>
               </div>
               <div className="flex space-x-1 ">
-                <p className="text-sm font-medium">Nom:</p>
+                <p className="text-sm font-medium">Nom: </p>
                 <p className="text-sm">{patient.nom || ""}</p>
               </div>
 
               <div className="flex space-x-1 ">
-                <p className="text-sm font-medium">Prénom:</p>
+                <p className="text-sm font-medium">Prénom: </p>
                 <p className="text-sm">{patient.prenom || ""}</p>
               </div>
               <div className="flex space-x-1 ">
@@ -65,9 +70,9 @@ import { PatientComplet, PatientCompletFormValues } from "@/types/entities.types
                 <p className="text-sm">{patient.sexe}</p>
               </div>
               <div className="flex space-x-1 ">
-                <p className="text-sm font-medium">Age:</p>
+                <p className="text-sm font-medium">Age: </p>
                 <p className="text-sm">
-                  {differenceInYears(patient.age, new Date())} ans
+                  {patient.age} ans
                 </p>
               </div>
               <div className="flex space-x-1 ">
@@ -81,6 +86,14 @@ import { PatientComplet, PatientCompletFormValues } from "@/types/entities.types
               <div className="flex space-x-1 ">
                 <p className="text-sm font-medium">Téléphone:</p>
                 <p className="text-sm">{patient.telephone}</p>
+              </div>
+              <div className="flex space-x-1 ">
+                <p className="text-sm font-medium">Centre: </p>
+                <p className="text-sm">{patient.centre}</p>
+              </div>
+              <div className="flex space-x-1 ">
+                <p className="text-sm font-medium">Date:</p>
+                <p className="text-sm">{patient.activite_date}</p>
               </div>
             </div>
           </AccordionContent>
@@ -381,72 +394,124 @@ import { PatientComplet, PatientCompletFormValues } from "@/types/entities.types
                 </tbody>
               </table>
               <div className="flex space-x-2 flex-wrap gap-y-2 my-2 flex-end">
-              
+              {patient.observation ?  <div className="grid grid-cols-1 gap-y-4">
+              <div className="flex space-x-1 items-center">
+                {patient.pas_glaucome_reevaluation ? (
+                <p className="text-sm font-semibold">Pas atteint de glaucome, réévaluation dans 2 ans</p>
+                ) : (
+                <span></span>
+                )}
+              </div>
+              <div className="flex space-x-1 items-center">
+                
+                {patient.risque_glaucome_examens ? (
+                  <p className="text-sm font-semibold">Risque de développer un glaucome, faire examens suivants : OCT papille et macula, et champ visuel.</p>
+                ) : (
+                 <span></span>
+                )}
+              </div>
+              <div className="flex space-x-1 items-center">
+                
+                {patient.gpao ? (
+                 <p className="text-sm font-semibold">	GPAO : traitement pour préserver votre vue</p>
+                ) : (
+                  <span></span>
+                )}
+              </div>
+              <div className="flex space-x-1 items-center">
+                
+                {patient.observation ? (
+                 <p className="text-sm font-semibold text-red-500">{patient.observation}</p>
+                ) : (
+                  <span></span>
+                )}
+              </div>
+           
+            </div>:
               <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8 grid grid-cols-2 gap-x-5 gap-y-2"
-                  id="observations-form"
-                >
-                  <FormField
-                    control={form.control}
-                    name="observation"
-                    render={({ field }) => (
-                      <FormItem className="col-span-2">
-                        <FormLabel>Observation</FormLabel>
-                        <FormControl>
-                          <Textarea {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              <form onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8 grid grid-cols-2 gap-x-5 gap-y-2"
+                id="observations-form"
+              >
+                <FormField
+                  control={form.control}
+                  name="observation"
+                  render={({ field }) => (
+                    <FormItem className="col-span-2">
+                      <FormLabel>Observation</FormLabel>
+                      <FormControl>
+                        <Textarea {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                  <FormField
-                    control={form.control}
-                    name="pas_glaucome_reevaluation"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Pas de glaucome reevaluation</FormLabel>
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <FormField
+                  control={form.control}
+                  name="pas_glaucome_reevaluation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Pas de glaucome reevaluation</FormLabel>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                  <FormField
-                    control={form.control}
-                    name="risque_glaucome_examens"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Risque de glaucome examens</FormLabel>
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </form>
-              </Form>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="bg-green-400 text-white"
-                >
-                  Valider
-                </Button>
-                <Button variant="destructive" size="lg">
-                  Modifier
-                </Button>
+                <FormField
+                  control={form.control}
+                  name="risque_glaucome_examens"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Risque de glaucome examens</FormLabel>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                   <FormField
+                  control={form.control}
+                  name="gpao"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>GPAO : traitement pour préserver votre vue</FormLabel>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit"
+                variant="outline"
+                size="lg"
+                className="bg-green-400 text-white"
+              >
+                Valider
+              </Button>
+              <Button variant="destructive" size="lg">
+                Modifier
+              </Button>
+              </form>
+            </Form>
+              
+              }
+              
+                
               </div>
             </div>
           </AccordionContent>
