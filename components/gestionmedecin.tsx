@@ -9,7 +9,7 @@ import { getMedecins } from "@/app/api/query";
 import { ColumnDef } from "@tanstack/react-table";
 
 export default function Gestionmedecin({ initialMedecins }: { initialMedecins: Auxiliaire[] }) {
-  const [auxiliaire, setAuxiliaire] = useState<Auxiliaire[]>([]);
+  const [auxiliaire, setAuxiliaire] = useState<Auxiliaire[]>(initialMedecins);
   const handleInsert = (payload: any) => {
     // console.log(payload.new);
     setAuxiliaire((oldAuxiliaire) => [
@@ -19,26 +19,14 @@ export default function Gestionmedecin({ initialMedecins }: { initialMedecins: A
   };
 
   useEffect(() => {
-    
     const supabase = createClient();
-    console.log("subscribing");
-    getMedecins().then((data: any) => setAuxiliaire(data || []));
 
     const channel = supabase
       .channel("schema-db-changes")
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "medecin",
-        },
-        handleInsert
-      )
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "medecin" }, handleInsert)
       .subscribe();
 
     return () => {
-      console.log("unsubscribing");
       supabase.removeChannel(channel);
     };
   }, []);
