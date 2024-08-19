@@ -17,7 +17,7 @@ export default function Gestionmedecin({ initialMedecins }: { initialMedecins: A
     ]);
   };
 
- /* useEffect(() => {
+  useEffect(() => {
     const supabase = createClient();
 
     const channel = supabase
@@ -29,7 +29,7 @@ export default function Gestionmedecin({ initialMedecins }: { initialMedecins: A
       supabase.removeChannel(channel);
     };
   }, []);
-*/
+
   const columns: ColumnDef<any>[] = [
     {
       accessorKey: "id",
