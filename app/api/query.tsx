@@ -9,11 +9,12 @@ import { redirect } from "next/navigation";
 
 export const Currentuser = async () => {
   const supabase = createClient();
+  
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  // console.log("je suis la")
-  // console.log(user)
+   console.log("je suis la")
+   console.log(user)
   // je fetch le role
   return user;
 };

@@ -14,7 +14,7 @@ export default  function AuthButton() {
  useEffect( () => {
   
     Currentuser().then((data)=>setUser(data))
-    console.log(user)
+   // console.log(user)
  }, [])
  
   const signOut = async () => {
