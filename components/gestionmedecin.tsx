@@ -17,10 +17,10 @@ export default function Gestionmedecin({ initialMedecins }: { initialMedecins: A
       payload.new as Auxiliaire,
     ]);
   };
-  
-  const supabase = createClient();
+
   useEffect(() => {
-  
+    
+    const supabase = createClient();
     console.log("subscribing");
     getMedecins().then((data: any) => setAuxiliaire(data || []));
 
@@ -41,7 +41,7 @@ export default function Gestionmedecin({ initialMedecins }: { initialMedecins: A
       console.log("unsubscribing");
       supabase.removeChannel(channel);
     };
-  }, [supabase]);
+  }, []);
 
   const columns: ColumnDef<any>[] = [
     {
