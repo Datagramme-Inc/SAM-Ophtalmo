@@ -1,3 +1,8 @@
+"use client";
+import {
+  ObservationsFormValues,
+  observationsSchema,
+} from "@/types/observations.types";
 import {
   Accordion,
   AccordionContent,
@@ -9,11 +14,32 @@ import { Button } from "@/components/ui/button";
 import { getPatient } from "@/app/api/get_element";
 import { differenceInYears } from "date-fns";
 import { X, CheckCircle2 } from "lucide-react";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { PatientComplet, PatientCompletFormValues } from "@/types/entities.types";
 
-async function page({ params }: { params: { id_patient: string } }) {
-  const patient = await getPatient(params.id_patient);
+ function page({ params }: { params: { id_patient: string } }) {
+
+ //patient state
+ const [patient, setPatient] = useState<any> ();
+  useEffect(() => {
+    const patient =  getPatient(params.id_patient).then((data)=>setPatient(data))
+  
+  }, [params.id_patient])
+  
+  const form = useForm<ObservationsFormValues>({
+    resolver: zodResolver(observationsSchema),
+  });
   console.log(patient);
   if (!patient) return <div>Patient inexistant...</div>;
+
+  const onSubmit = (data: ObservationsFormValues) => {
+   console.log(data)
+  };
   return (
     <div className="container ">
       <Accordion type="single" collapsible className="w-full">
@@ -354,7 +380,63 @@ async function page({ params }: { params: { id_patient: string } }) {
                   </tr>
                 </tbody>
               </table>
-              <div className="flex space-x-2 my-2 flex-end">
+              <div className="flex space-x-2 flex-wrap gap-y-2 my-2 flex-end">
+              
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-8 grid grid-cols-2 gap-x-5 gap-y-2"
+                  id="observations-form"
+                >
+                  <FormField
+                    control={form.control}
+                    name="observation"
+                    render={({ field }) => (
+                      <FormItem className="col-span-2">
+                        <FormLabel>Observation</FormLabel>
+                        <FormControl>
+                          <Textarea {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="pas_glaucome_reevaluation"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Pas de glaucome reevaluation</FormLabel>
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="risque_glaucome_examens"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Risque de glaucome examens</FormLabel>
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </form>
+              </Form>
                 <Button
                   variant="outline"
                   size="lg"

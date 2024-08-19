@@ -146,11 +146,11 @@ export type PatientComplet = {} & Patient &
   AntecedentsPersonnels &
   AntecedentsFamiliaux &
   Retinographie &
-  ConstantesTraitement &
-  Observations;
+  ConstantesTraitement ; //&
+ // Observations;
 
 export type PatientCompletFormValues = PatientFormValues &
   AntecedentsCompletFormValues &
   ConstantesTraitementFormValues &
-  RetinographieFormValues &
-  ObservationsFormValues;
+  RetinographieFormValues //&
+ // ObservationsFormValues;

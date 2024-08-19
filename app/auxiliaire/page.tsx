@@ -128,7 +128,7 @@ export default function Page() {
       ),
       id: "retinographie",
     },
-    {
+   /* {
       title: "Oberservations",
       body: (
         <ObservationsForm
@@ -138,7 +138,7 @@ export default function Page() {
         />
       ),
       id: "observations-form",
-    },
+    },*/
     {
       title: "Valider",
       body: null,
@@ -156,7 +156,7 @@ export default function Page() {
       ...retinographie,
       ...constantes_traitement,
       ...constantes_traitementD,
-      ...observations,
+      //...observations,
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
