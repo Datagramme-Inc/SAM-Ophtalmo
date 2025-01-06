@@ -16,7 +16,7 @@ export async function createPatient(patient: PatientCompletFormValues) {
   const user = await getUser();
   if (!user) throw new Error("Unauthorized not found");
 
-  const phone = user.email ? user.email.split("@")[0] : null;
+  // const phone = user.email ? user.email.split("@")[0] : null;
   // const aux = await supabase
   //   .from("auxiliaire")
   //   .select("*")
