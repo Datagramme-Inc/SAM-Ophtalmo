@@ -1,3 +1,4 @@
+import { ExamenFormValues } from "@/components/patients/ExamenForm";
 import { AntecedentsCompletFormValues } from "./antecedents.types";
 import { ConstantesTraitementFormValues } from "./constantes-traitement.types";
 import { ObservationsFormValues } from "./observations.types";
@@ -142,6 +143,51 @@ export interface ConstantesTraitement {
   traitement_hypotonisant_oculaire: string;
 }
 
+// Examen
+export interface ExamenAnnexes {
+  id?: number;
+  patient_id?: number;
+  om_od: string;
+  om_og: string;
+  palpebral_od: string;
+  palpebral_og: string;
+  conjonctives_od: string;
+  conjonctives_og: string;
+  autres_od: string;
+  autres_og: string;
+}
+
+export interface ExamenSA {
+  cornee_od: string;
+  cornee_og: string;
+  chambre_anterieur_od: string;
+  chambre_anterieur_og: string;
+  rpm_od: "+" | "lent" | "-";
+  rpm_og: "+" | "lent" | "-";
+}
+
+export interface ExamenTOCristallin {
+  to_od: string;
+  to_og: string;
+  cristallin_od: "Clair" | "Cataracte" | "Ectopie" | "Aphakie" | "Pseudophakie";
+  cristallin_og: "Clair" | "Cataracte" | "Ectopie" | "Aphakie" | "Pseudophakie";
+}
+
+export interface ExamenSP {
+  id?: number;
+  patient_id?: number;
+  champs_retiniens_od: string;
+  champs_retiniens_og: string;
+  vaisseaux_od: string;
+  vaisseaux_og: string;
+  papille_od: string;
+  papille_og: string;
+  macula_od: string;
+  macula_og: string;
+  vitre_od: string;
+  vitre_og: string;
+}
+
 export type PatientComplet = {} & Patient &
   AntecedentsPersonnels &
   AntecedentsFamiliaux &
@@ -151,6 +197,7 @@ export type PatientComplet = {} & Patient &
 
 export type PatientCompletFormValues = PatientFormValues &
   AntecedentsCompletFormValues &
-  ConstantesTraitementFormValues &
   RetinographieFormValues &
-  ObservationsFormValues;
+  ConstantesTraitementFormValues &
+  ObservationsFormValues &
+  ExamenFormValues;

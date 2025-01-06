@@ -19,10 +19,12 @@ import { usePatientStore } from "@/stores/patients-store";
 import { PatientCompletFormValues } from "@/types/entities.types";
 import { createClient } from "@/utils/supabase/client";
 import { createPatient, updatePatient } from "@/app/actions";
-import { randomUUID } from "crypto";
+import { v4 as randomUUID } from "uuid";
 import ObservationsForm from "@/components/patients/ObservationsForm";
 import { useSearchParams } from "next/navigation";
 import { getPatient } from "@/app/api/get_element";
+import ExamenForm from "@/components/patients/ExamenForm";
+import { extname } from "path";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -46,7 +48,7 @@ export default function Page() {
     const supabase = createClient();
     const { data, error } = await supabase.storage
       .from("samophtalmo")
-      .upload(`${randomUUID()}-${file.name}`, file);
+      .upload(`${randomUUID()}${extname(file.name) || ".png"}`, file);
 
     if (error) {
       console.error("Error uploading file:", error);
@@ -54,7 +56,12 @@ export default function Page() {
     }
 
     console.log("File uploaded successfully:", data);
-    return { data };
+
+    const { data: fileUrlData } = supabase.storage
+      .from("samophtalmo")
+      .getPublicUrl(data.fullPath);
+
+    return { data, publicUrl: fileUrlData.publicUrl };
   }
 
   const {
@@ -64,11 +71,13 @@ export default function Page() {
     setConstantesTraitementD,
     constantes_traitementD,
     setRetinographie,
+    setExamen,
     identite_patient,
     antecedents,
     constantes_traitement,
     retinographie,
     observations,
+    examen,
     setObservations,
     reset,
   } = usePatientStore();
@@ -163,6 +172,45 @@ export default function Page() {
         segment_anterieur_retinographie:
           patient.segment_anterieur_retinographie,
       });
+
+      setExamen({
+        annexes: {
+          om_od: patient.om_od ?? "",
+          om_og: patient.om_og ?? "",
+          palpebral_od: patient.palpebral_od ?? "",
+          palpebral_og: patient.palpebral_og ?? "",
+          conjonctives_od: patient.conjonctives_od ?? "",
+          conjonctives_og: patient.conjonctives_og ?? "",
+          autres_od: patient.autres_od ?? "",
+          autres_og: patient.autres_og ?? "",
+        },
+        sa: {
+          cornee_od: patient.cornee_od ?? "",
+          cornee_og: patient.cornee_og ?? "",
+          chambre_anterieur_od: patient.chambre_anterieur_od ?? "",
+          chambre_anterieur_og: patient.chambre_anterieur_og ?? "",
+          rpm_od: patient.rpm_od ?? "",
+          rpm_og: patient.rpm_og ?? "",
+        },
+        toCristallin: {
+          to_od: patient.to_od ?? "",
+          to_og: patient.to_og ?? "",
+          cristallin_od: patient.cristallin_od ?? "",
+          cristallin_og: patient.cristallin_og ?? "",
+        },
+        sp: {
+          champs_retiniens_od: patient.champs_retiniens_od ?? "",
+          champs_retiniens_og: patient.champs_retiniens_og ?? "",
+          vaisseaux_od: patient.vaisseaux_od ?? "",
+          vaisseaux_og: patient.vaisseaux_og ?? "",
+          papille_od: patient.papille_od ?? "",
+          papille_og: patient.papille_og ?? "",
+          macula_od: patient.macula_od ?? "",
+          macula_og: patient.macula_og ?? "",
+          vitre_od: patient.vitre_od ?? "",
+          vitre_og: patient.vitre_og ?? "",
+        },
+      });
     });
   }, [patientId]);
 
@@ -223,6 +271,17 @@ export default function Page() {
       id: "observations-form",
     },
     {
+      title: "Examen",
+      body: (
+        <ExamenForm
+          nextFn={handleNextStep}
+          setFn={setExamen}
+          initValues={examen}
+        />
+      ),
+      id: "examen-form",
+    },
+    {
       title: "Valider",
       body: null,
       id: "valider",
@@ -238,14 +297,18 @@ export default function Page() {
       ...antecedents.familiaux,
       ...retinographie,
       ...constantes_traitement,
-      ...constantes_traitementD,
       ...observations,
+      ...examen.annexes,
+      ...examen.sa,
+      ...examen.toCristallin,
+      ...examen.sp,
     };
-    if (!fullData.addiction) fullData.type_addiction = "";
+
     try {
       setError(null);
       setIsSaving(true);
       // Upload the file to Supabase
+      console.dir(fullData, { depth: null });
       if (
         fullData.fichier_joint &&
         typeof fullData.fichier_joint !== "string"
@@ -254,7 +317,7 @@ export default function Page() {
         if (uploadResult.error) {
           throw new Error("File upload failed");
         }
-        //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
+        fullData.fichier_joint = uploadResult.publicUrl; // Assuming you want to store the file URL
       }
       if (patientId) await updatePatient(patientId, fullData);
       else await createPatient(fullData);

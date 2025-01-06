@@ -6,6 +6,7 @@ import {
 import { ObservationsFormValues } from "@/types/observations.types";
 import { PatientFormValues } from "@/types/patient-identity.types";
 import { RetinographieFormValues } from "@/types/retinographie.types";
+import { Examen } from "@/types/entities.types";
 import { create } from "zustand";
 
 export type PatientStore = {
@@ -15,6 +16,7 @@ export type PatientStore = {
   identite_patient: PatientFormValues;
   retinographie: RetinographieFormValues;
   observations: ObservationsFormValues;
+  examen: Examen;
   setAntecedents: (antecedents: AntecedentsFormValues) => void;
   setConstantesTraitement: (
     constantes_traitement: ConstantesTraitementFormValues
@@ -25,6 +27,7 @@ export type PatientStore = {
   setIdentitePatient: (identite_patient: PatientFormValues) => void;
   setRetinographie: (retinographie: RetinographieFormValues) => void;
   setObservations: (observations: ObservationsFormValues) => void;
+  setExamen: (examen: Examen) => void;
   reset: () => void;
 };
 
@@ -101,12 +104,51 @@ export const defaultPatient: PatientStore = {
     observation: "",
     gpao: false,
   },
+  examen: {
+    annexes: {
+      om_od: "",
+      om_og: "",
+      palpebral_od: "",
+      palpebral_og: "",
+      conjonctives_od: "",
+      conjonctives_og: "",
+      autres_od: "",
+      autres_og: "",
+    },
+    sa: {
+      cornee_od: "",
+      cornee_og: "",
+      chambre_anterieur_od: "",
+      chambre_anterieur_og: "",
+      rpm_od: "",
+      rpm_og: "",
+    },
+    toCristallin: {
+      to_od: "",
+      to_og: "",
+      cristallin_od: "",
+      cristallin_og: "",
+    },
+    sp: {
+      champs_retiniens_od: "",
+      champs_retiniens_og: "",
+      vaisseaux_od: "",
+      vaisseaux_og: "",
+      papille_od: "",
+      papille_og: "",
+      macula_od: "",
+      macula_og: "",
+      vitre_od: "",
+      vitre_og: "",
+    },
+  },
   setAntecedents: () => {},
   setConstantesTraitement: () => {},
   setConstantesTraitementD: () => {},
   setIdentitePatient: () => {},
   setRetinographie: () => {},
   setObservations: () => {},
+  setExamen: () => {},
   reset: () => {},
 };
 
@@ -120,5 +162,6 @@ export const usePatientStore = create<PatientStore>((set) => ({
   setIdentitePatient: (identite_patient) => set({ identite_patient }),
   setRetinographie: (retinographie) => set({ retinographie }),
   setObservations: (observations) => set({ observations }),
+  setExamen: (examen) => set({ examen }),
   reset: () => set(defaultPatient),
 }));
