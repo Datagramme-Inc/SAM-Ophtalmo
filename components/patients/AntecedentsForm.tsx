@@ -40,7 +40,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
 
   useEffect(() => {
     form.reset(initValues);
-  }, []);
+  }, [initValues, form]);
 
   return (
     <Form {...form}>
@@ -62,6 +62,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
+                    value={field.value}
                     defaultValue="false"
                     className="flex flex-col space-y-1"
                   >
@@ -93,6 +94,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
+                    value={field.value}
                     defaultValue="false"
                     className="flex flex-col space-y-1"
                   >
@@ -124,6 +126,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
+                    value={field.value}
                     defaultValue="false"
                     className="flex flex-col space-y-1"
                   >
@@ -155,6 +158,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
+                    value={field.value}
                     defaultValue="false"
                     className="flex flex-col space-y-1"
                   >
@@ -186,6 +190,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
+                    value={field.value}
                     defaultValue="false"
                     className="flex flex-col space-y-1"
                   >
@@ -283,6 +288,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
+                    value={field.value}
                     defaultValue="false"
                     className="flex flex-col space-y-1"
                   >
@@ -314,6 +320,7 @@ const AntecedentsForm: React.FC<AntecedentsFormProps> = ({
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
+                    value={field.value}
                     defaultValue="false"
                     className="flex flex-col space-y-1"
                   >

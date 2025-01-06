@@ -38,7 +38,7 @@ export const ConstantesTraitementFormD: React.FC<
 
   useEffect(() => {
     form.reset(initValues);
-  }, []);
+  }, [initValues, form]);
 
   return (
     <Form {...form}>

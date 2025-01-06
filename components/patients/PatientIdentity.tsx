@@ -32,7 +32,6 @@ import { Calendar } from "../ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns/format";
 
-
 type PatientIdentityProps = {
   nextFn: () => void;
   setFn: (pf: PatientFormValues) => void;
@@ -50,7 +49,7 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({
 
   useEffect(() => {
     form.reset(initValues);
-  }, []);
+  }, [initValues, form]);
 
   const onSubmit = (data: PatientFormValues) => {
     console.log("done");
@@ -78,7 +77,7 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({
             </FormItem>
           )}
         />
-          <FormField
+        <FormField
           control={form.control}
           name="centre"
           render={({ field }) => (
@@ -92,47 +91,48 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({
           )}
         />
 
-        <FormField  control={form.control}
-                  name="activite_date"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Date Activités</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "max-w-[150px] pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value,"PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+        <FormField
+          control={form.control}
+          name="activite_date"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Date Activités</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "max-w-[150px] pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="nom"
@@ -216,7 +216,11 @@ const PatientIdentity: React.FC<PatientIdentityProps> = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Adresse</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Sélectionnez région" />

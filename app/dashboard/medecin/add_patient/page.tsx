@@ -1,6 +1,6 @@
 "use client";
 import PatientIdentity from "@/components/patients/PatientIdentity";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -18,14 +18,19 @@ import Link from "next/link";
 import { usePatientStore } from "@/stores/patients-store";
 import { PatientCompletFormValues } from "@/types/entities.types";
 import { createClient } from "@/utils/supabase/client";
-import { createPatient } from "@/app/actions";
+import { createPatient, updatePatient } from "@/app/actions";
 import { randomUUID } from "crypto";
 import ObservationsForm from "@/components/patients/ObservationsForm";
+import { useSearchParams } from "next/navigation";
+import { getPatient } from "@/app/api/get_element";
 
 export default function Page() {
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const patientId = searchParams.get("pid");
 
   function handleNextStep() {
     if (step === MAX_STEPS - 1) return;
@@ -36,6 +41,7 @@ export default function Page() {
     if (step === 0) return;
     setStep((prev) => prev - 1);
   }
+
   async function uploadFile(file: any) {
     const supabase = createClient();
     const { data, error } = await supabase.storage
@@ -55,6 +61,8 @@ export default function Page() {
     setIdentitePatient,
     setAntecedents,
     setConstantesTraitement,
+    setConstantesTraitementD,
+    constantes_traitementD,
     setRetinographie,
     identite_patient,
     antecedents,
@@ -64,6 +72,99 @@ export default function Page() {
     setObservations,
     reset,
   } = usePatientStore();
+
+  useEffect(() => {
+    if (!patientId) return;
+    getPatient(patientId as string).then((patient) => {
+      setIdentitePatient({
+        age: parseInt(patient.age),
+        adresse: patient.adresse,
+        confirmer_telephone: patient.confirmer_telephone,
+        no_fiche: patient.no_fiche,
+        nom: patient.nom,
+        prenom: patient.prenom,
+        profession: patient.profession,
+        sexe: patient.sexe,
+        telephone: patient.telephone,
+        centre: patient.centre,
+        activite_date: new Date(patient.activite_date),
+      });
+
+      setAntecedents({
+        personnels: {
+          traitement: patient.traitement,
+          addiction: patient.addiction.toString(),
+          type_addiction: patient.type_addiction,
+          autres: patient.autres,
+          pathologie_ophtalmologique: patient.pathologie_ophtalmologique,
+          atopie: patient.atopie.toString(),
+          diabete: patient.diabete.toString(),
+          drepanocytose: patient.drepanocytose.toString(),
+          hta: patient.hta.toString(),
+        },
+        familiaux: {
+          autres: patient.autres,
+          cecite: patient.cecite.toString(),
+          gpao: patient.gpao.toString(),
+        },
+      });
+
+      setConstantesTraitement({
+        acuite_visuelle_correction: patient.acuite_visuelle_correction,
+        cd: patient.cd,
+        og: parseFloat(patient.og),
+        pachymetrie: patient.pachymetrie,
+        refraction_automatisee_a: patient.refraction_automatisee_a,
+        refraction_automatisee_c: patient.refraction_automatisee_c,
+        refraction_automatisee_s: patient.refraction_automatisee_s,
+        refraction_automatisee_dp: patient.refraction_automatisee_dp,
+        tonus_oculaire: patient.tonus_oculaire,
+        traitement_hypotonisant_oculaire:
+          patient.traitement_hypotonisant_oculaire,
+      });
+
+      setConstantesTraitement({
+        acuite_visuelle_correction: patient.acuite_visuelle_correction ?? false,
+        og: parseFloat(patient.og ?? "0"),
+        refraction_automatisee_a: patient.refraction_automatisee_a ?? 0,
+        refraction_automatisee_s: patient.refraction_automatisee_s ?? 0,
+        refraction_automatisee_c: patient.refraction_automatisee_c ?? 0,
+        refraction_automatisee_dp: patient.refraction_automatisee_dp ?? 0,
+        tonus_oculaire: patient.tonus_oculaire ?? 0,
+        pachymetrie: patient.pachymetrie ?? 0,
+        cd: patient.cd ?? 0,
+        traitement_hypotonisant_oculaire:
+          patient.traitement_hypotonisant_oculaire ?? "",
+      });
+
+      setConstantesTraitementD({
+        acuite_visuelle_correction_d:
+          patient.acuite_visuelle_correction_d ?? false,
+        od: parseFloat(patient.od ?? "0"),
+        odg: parseFloat(patient.odg ?? "0"),
+        refraction_automatisee_a_d: patient.refraction_automatisee_a_d ?? 0,
+        refraction_automatisee_s_d: patient.refraction_automatisee_s_d ?? 0,
+        refraction_automatisee_c_d: patient.refraction_automatisee_c_d ?? 0,
+        tonus_oculaire_d: patient.tonus_oculaire_d ?? 0,
+        pachymetrie_d: patient.pachymetrie_d ?? 0,
+        cd_d: patient.cd_d ?? 0,
+        traitement_hypotonisant_oculaire_d:
+          patient.traitement_hypotonisant_oculaire_d ?? "",
+      });
+
+      setObservations({
+        pas_glaucome_reevaluation: patient.pas_glaucome_reevaluation,
+        risque_glaucome_examens: patient.risque_glaucome_examens,
+        observation: patient.observation ?? "",
+      });
+
+      setRetinographie({
+        fichier_joint: patient.fichier_joint,
+        segment_anterieur_retinographie:
+          patient.segment_anterieur_retinographie,
+      });
+    });
+  }, [patientId]);
 
   const STEPS_INFOS = [
     {
@@ -137,21 +238,26 @@ export default function Page() {
       ...antecedents.familiaux,
       ...retinographie,
       ...constantes_traitement,
-     // ...observations,
+      ...constantes_traitementD,
+      ...observations,
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
       setError(null);
       setIsSaving(true);
       // Upload the file to Supabase
-      if (fullData.fichier_joint) {
+      if (
+        fullData.fichier_joint &&
+        typeof fullData.fichier_joint !== "string"
+      ) {
         const uploadResult = await uploadFile(fullData.fichier_joint);
         if (uploadResult.error) {
           throw new Error("File upload failed");
         }
         //  fullData.fichier_joint_url = uploadResult.data.Key; // Assuming you want to store the file URL
       }
-      await createPatient(fullData);
+      if (patientId) await updatePatient(patientId, fullData);
+      else await createPatient(fullData);
       reset();
       setStep(0);
     } catch (err: any) {

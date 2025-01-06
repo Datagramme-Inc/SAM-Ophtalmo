@@ -88,8 +88,8 @@ export const defaultPatient: PatientStore = {
     profession: "",
     sexe: "M",
     telephone: "",
-    centre:"",
-    activite_date:new Date()
+    centre: "",
+    activite_date: new Date(),
   },
   retinographie: {
     fichier_joint: undefined,
@@ -99,7 +99,7 @@ export const defaultPatient: PatientStore = {
     pas_glaucome_reevaluation: false,
     risque_glaucome_examens: false,
     observation: "",
-    gpao:false
+    gpao: false,
   },
   setAntecedents: () => {},
   setConstantesTraitement: () => {},

@@ -128,7 +128,7 @@ export default function Page() {
       ),
       id: "retinographie",
     },
-   /* {
+    /* {
       title: "Oberservations",
       body: (
         <ObservationsForm
@@ -156,11 +156,11 @@ export default function Page() {
       ...retinographie,
       ...constantes_traitement,
       ...constantes_traitementD,
-      //...observations,
+      ...observations,
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
-      console.log("je suis la");
+      console.log("je suis la(auxiliaire)");
       setError(null);
       setIsSaving(true);
       // Upload the file to Supabase

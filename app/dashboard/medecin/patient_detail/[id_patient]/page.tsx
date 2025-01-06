@@ -14,36 +14,46 @@ import { Button } from "@/components/ui/button";
 import { getPatient } from "@/app/api/get_element";
 import { differenceInYears } from "date-fns";
 import { X, CheckCircle2 } from "lucide-react";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { PatientComplet, PatientCompletFormValues } from "@/types/entities.types";
+import {
+  PatientComplet,
+  PatientCompletFormValues,
+} from "@/types/entities.types";
 import { UpdateObservation } from "@/app/api/query";
 
- function page({ params }: { params: { id_patient: string } }) {
-
- //patient state
- const [patient, setPatient] = useState<any> ();
+function page({ params }: { params: { id_patient: string } }) {
+  //patient state
+  const [patient, setPatient] = useState<any>();
   useEffect(() => {
-    const patient =  getPatient(params.id_patient).then((data)=>setPatient(data))
-  
-  }, [params.id_patient])
-  
+    getPatient(params.id_patient).then((data) => setPatient(data));
+  }, [params.id_patient]);
+
   const form = useForm<ObservationsFormValues>({
     resolver: zodResolver(observationsSchema),
   });
-  console.log(patient);
   if (!patient) return <div>Patient inexistant...</div>;
 
   const onSubmit = async (data: ObservationsFormValues) => {
-    console.log(data)
-   await UpdateObservation(data,params.id_patient).then((data)=>{
-    console.log(data);
-   })
-   
+    console.log("upadting observations", data);
+    await UpdateObservation(data, params.id_patient)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   return (
     <div className="container ">
@@ -71,9 +81,7 @@ import { UpdateObservation } from "@/app/api/query";
               </div>
               <div className="flex space-x-1 ">
                 <p className="text-sm font-medium">Age: </p>
-                <p className="text-sm">
-                  {patient.age} ans
-                </p>
+                <p className="text-sm">{patient.age} ans</p>
               </div>
               <div className="flex space-x-1 ">
                 <p className="text-sm font-medium">Adresse:</p>
@@ -106,85 +114,78 @@ import { UpdateObservation } from "@/app/api/query";
               Personnels
             </h2>
             <div className="grid md:grid-cols-4 grid-cols-2  gap-y-4 gap-2">
-              <div className="flex space-x-1 items-center">
-                <p className="text-sm font-semibold">HTA</p>
-                {patient.hta ? (
-                  <CheckCircle2 size={16} className="text-green-500" />
-                ) : (
-                  <X color="red" size={16} />
-                )}
-              </div>
-              <div className="flex space-x-1 items-center">
-                <p className="text-sm font-semibold">Diabéte</p>
-                {patient.diabete ? (
-                  <CheckCircle2 size={16} className="text-green-500" />
-                ) : (
-                  <X color="red" size={16} />
-                )}
-              </div>
-              <div className="flex space-x-1 items-center">
-                <p className="text-sm font-semibold">Drépanocytose</p>
-                {patient?.drepanocytose ? (
-                  <CheckCircle2 size={16} className="text-green-500" />
-                ) : (
-                  <X color="red" size={16} />
-                )}
-              </div>
-              <div className="flex space-x-1 items-center">
-                <p className="text-sm font-semibold">Atopie</p>
-                {patient.atopie ? (
-                  <CheckCircle2 size={16} className="text-green-500" />
-                ) : (
-                  <X color="red" size={16} />
-                )}
-              </div>
-              <div className=" flex flex-col space-y-2">
+              {patient.hta && (
                 <div className="flex space-x-1 items-center">
-                  <p className="text-sm font-semibold">Addiction</p>
-                  {patient.addiction ? (
-                    <CheckCircle2 size={16} className="text-green-500" />
-                  ) : (
-                    <X color="red" size={16} />
-                  )}
+                  <p className="text-sm font-semibold">HTA</p>
+                  <CheckCircle2 size={16} className="text-green-500" />
                 </div>
-                <p className="text-sm leading-5 px-1 py-1 bg-gray-100 ">
-                  {patient.type_addiction || ""}
-                </p>
+              )}
+              {patient.diabete && (
+                <div className="flex space-x-1 items-center">
+                  <p className="text-sm font-semibold">Diabéte</p>
+                  <CheckCircle2 size={16} className="text-green-500" />
+                </div>
+              )}
+              {patient?.drepanocytose && (
+                <div className="flex space-x-1 items-center">
+                  <p className="text-sm font-semibold">Drépanocytose</p>
+                  <CheckCircle2 size={16} className="text-green-500" />
+                </div>
+              )}
+              {patient.atopie && (
+                <div className="flex space-x-1 items-center">
+                  <p className="text-sm font-semibold">Atopie</p>
+                  <CheckCircle2 size={16} className="text-green-500" />
+                </div>
+              )}
+              {patient.addiction && (
+                <div className=" flex flex-col space-y-2">
+                  <div className="flex space-x-1 items-center">
+                    <p className="text-sm font-semibold">Addiction</p>
+                    <CheckCircle2 size={16} className="text-green-500" />
+                  </div>
+                  <p className="text-sm leading-5 px-1 py-1 bg-gray-100 ">
+                    {patient.type_addiction || ""}
+                  </p>
+                </div>
+              )}
+              <div className="flex space-x-1 items-center">
+                {patient.pathologie_ophtalmologique ? (
+                  <>
+                    <p className="text-sm font-semibold">
+                      Pathologie opthalmologique:{" "}
+                    </p>
+                    <span className="text-sm">
+                      {patient.pathologie_ophtalmologique}
+                    </span>
+                  </>
+                ) : null}
               </div>
               <div className="flex space-x-1 items-center">
-                <p className="text-sm font-semibold">
-                  Pathologie opthalmologique:{" "}
-                </p>
-                <span className="text-sm">
-                  {patient.pathologie_ophtalmologique}
-                </span>
-              </div>
-              <div className="flex space-x-1 items-center">
-                <p className="text-sm font-semibold">Traitement </p>
-                <span className="text-sm">{patient.traitement}</span>
+                {patient.traitement ? (
+                  <>
+                    <p className="text-sm font-semibold">Traitement </p>
+                    <span className="text-sm">{patient.traitement}</span>
+                  </>
+                ) : null}
               </div>
             </div>
             <h2 className="text-base font-semibold underline underline-offset-2 my-4">
               Familiaux
             </h2>
             <div className="grid grid-cols-4 gap-y-4">
-              <div className="flex space-x-1 items-center">
-                <p className="text-sm font-semibold">Cécité</p>
-                {patient.cecite ? (
+              {patient.cecite && (
+                <div className="flex space-x-1 items-center">
+                  <p className="text-sm font-semibold">Cécité</p>
                   <CheckCircle2 size={16} className="text-green-500" />
-                ) : (
-                  <X color="red" size={16} />
-                )}
-              </div>
-              <div className="flex space-x-1 items-center">
-                <p className="text-sm font-semibold">GPAO</p>
-                {patient.gpao ? (
+                </div>
+              )}
+              {patient.gpao && (
+                <div className="flex space-x-1 items-center">
+                  <p className="text-sm font-semibold">GPAO</p>
                   <CheckCircle2 size={16} className="text-green-500" />
-                ) : (
-                  <X color="red" size={16} />
-                )}
-              </div>
-
+                </div>
+              )}
               <div className=" flex flex-col space-y-2">
                 <p className="text-sm font-semibold">Autres</p>
                 <p className="text-sm leading-5 px-1 py-1 bg-gray-100 ">
@@ -394,124 +395,132 @@ import { UpdateObservation } from "@/app/api/query";
                 </tbody>
               </table>
               <div className="flex space-x-2 flex-wrap gap-y-2 my-2 flex-end">
-              {patient.observation ?  <div className="grid grid-cols-1 gap-y-4">
-              <div className="flex space-x-1 items-center">
-                {patient.pas_glaucome_reevaluation ? (
-                <p className="text-sm font-semibold">Pas atteint de glaucome, réévaluation dans 2 ans</p>
-                ) : (
-                <span></span>
-                )}
-              </div>
-              <div className="flex space-x-1 items-center">
-                
-                {patient.risque_glaucome_examens ? (
-                  <p className="text-sm font-semibold">Risque de développer un glaucome, faire examens suivants : OCT papille et macula, et champ visuel.</p>
-                ) : (
-                 <span></span>
-                )}
-              </div>
-              <div className="flex space-x-1 items-center">
-                
-                {patient.gpao ? (
-                 <p className="text-sm font-semibold">	GPAO : traitement pour préserver votre vue</p>
-                ) : (
-                  <span></span>
-                )}
-              </div>
-              <div className="flex space-x-1 items-center">
-                
                 {patient.observation ? (
-                 <p className="text-sm font-semibold text-red-500">{patient.observation}</p>
+                  <div className="grid grid-cols-1 gap-y-4">
+                    <div className="flex space-x-1 items-center">
+                      {patient.pas_glaucome_reevaluation ? (
+                        <p className="text-sm font-semibold">
+                          Pas atteint de glaucome, réévaluation dans 2 ans
+                        </p>
+                      ) : (
+                        <span></span>
+                      )}
+                    </div>
+                    <div className="flex space-x-1 items-center">
+                      {patient.risque_glaucome_examens ? (
+                        <p className="text-sm font-semibold">
+                          Risque de développer un glaucome, faire examens
+                          suivants : OCT papille et macula, et champ visuel.
+                        </p>
+                      ) : (
+                        <span></span>
+                      )}
+                    </div>
+                    <div className="flex space-x-1 items-center">
+                      {patient.gpao ? (
+                        <p className="text-sm font-semibold">
+                           GPAO : traitement pour préserver votre vue
+                        </p>
+                      ) : (
+                        <span></span>
+                      )}
+                    </div>
+                    <div className="flex space-x-1 items-center">
+                      {patient.observation ? (
+                        <p className="text-sm font-semibold text-red-500">
+                          {patient.observation}
+                        </p>
+                      ) : (
+                        <span></span>
+                      )}
+                    </div>
+                  </div>
                 ) : (
-                  <span></span>
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="space-y-8 grid grid-cols-2 gap-x-5 gap-y-2"
+                      id="observations-form"
+                    >
+                      <FormField
+                        control={form.control}
+                        name="observation"
+                        render={({ field }) => (
+                          <FormItem className="col-span-2">
+                            <FormLabel>Observation</FormLabel>
+                            <FormControl>
+                              <Textarea {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="pas_glaucome_reevaluation"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Pas de glaucome reevaluation</FormLabel>
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="risque_glaucome_examens"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Risque de glaucome examens</FormLabel>
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="gpao"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              GPAO : traitement pour préserver votre vue
+                            </FormLabel>
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button
+                        type="submit"
+                        variant="outline"
+                        size="lg"
+                        className="bg-green-400 text-white"
+                      >
+                        Valider
+                      </Button>
+                      {/* <Button variant="destructive" size="lg">
+                        Modifier
+                      </Button> */}
+                    </form>
+                  </Form>
                 )}
-              </div>
-           
-            </div>:
-              <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 grid grid-cols-2 gap-x-5 gap-y-2"
-                id="observations-form"
-              >
-                <FormField
-                  control={form.control}
-                  name="observation"
-                  render={({ field }) => (
-                    <FormItem className="col-span-2">
-                      <FormLabel>Observation</FormLabel>
-                      <FormControl>
-                        <Textarea {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="pas_glaucome_reevaluation"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Pas de glaucome reevaluation</FormLabel>
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="risque_glaucome_examens"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Risque de glaucome examens</FormLabel>
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                   <FormField
-                  control={form.control}
-                  name="gpao"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>GPAO : traitement pour préserver votre vue</FormLabel>
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit"
-                variant="outline"
-                size="lg"
-                className="bg-green-400 text-white"
-              >
-                Valider
-              </Button>
-              <Button variant="destructive" size="lg">
-                Modifier
-              </Button>
-              </form>
-            </Form>
-              
-              }
-              
-                
               </div>
             </div>
           </AccordionContent>
