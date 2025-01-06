@@ -32,6 +32,7 @@ import {
   PatientCompletFormValues,
 } from "@/types/entities.types";
 import { UpdateObservation } from "@/app/api/query";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 function page({ params }: { params: { id_patient: string } }) {
   //patient state
@@ -416,13 +417,12 @@ function page({ params }: { params: { id_patient: string } }) {
                       )}
                     </div>
                     <div className="flex space-x-1 items-center">
+                      Observations:
                       {patient.observation ? (
                         <p className="text-sm font-semibold text-red-500">
                           {patient.observation}
                         </p>
-                      ) : (
-                        <span></span>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 ) : (
@@ -512,6 +512,201 @@ function page({ params }: { params: { id_patient: string } }) {
                   </Form>
                 )}
               </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="examination-data">
+          <AccordionTrigger>Examen</AccordionTrigger>
+          <AccordionContent>
+            <div className="mt-6 grid grid-cols-1 gap-6">
+              {/* Annexes Table */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Annexes</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative overflow-x-auto">
+                    <table className="w-full text-sm text-left">
+                      <thead className="text-xs uppercase bg-gray-50">
+                        <tr>
+                          <th className="px-6 py-3">Examen</th>
+                          <th className="px-6 py-3">OD (Œil Droit)</th>
+                          <th className="px-6 py-3">OG (Œil Gauche)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">OM</td>
+                          <td className="px-6 py-4">{patient.om_od || "-"}</td>
+                          <td className="px-6 py-4">{patient.om_og || "-"}</td>
+                        </tr>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">Palpébral</td>
+                          <td className="px-6 py-4">
+                            {patient.palpebral_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.palpebral_og || "-"}
+                          </td>
+                        </tr>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">
+                            Conjonctives
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.conjonctives_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.conjonctives_og || "-"}
+                          </td>
+                        </tr>
+                        <tr className="bg-white">
+                          <td className="px-6 py-4 font-medium">Autres</td>
+                          <td className="px-6 py-4">
+                            {patient.autres_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.autres_og || "-"}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Segment Anterieur Table */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Segment Antérieur</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative overflow-x-auto">
+                    <table className="w-full text-sm text-left">
+                      <thead className="text-xs uppercase bg-gray-50">
+                        <tr>
+                          <th className="px-6 py-3">Examen</th>
+                          <th className="px-6 py-3">OD (Œil Droit)</th>
+                          <th className="px-6 py-3">OG (Œil Gauche)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">Cornée</td>
+                          <td className="px-6 py-4">
+                            {patient.cornee_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.cornee_og || "-"}
+                          </td>
+                        </tr>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">
+                            Chambre Antérieur
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.chambre_anterieur_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.chambre_anterieur_og || "-"}
+                          </td>
+                        </tr>
+                        <tr className="bg-white">
+                          <td className="px-6 py-4 font-medium">RPM</td>
+                          <td className="px-6 py-4">{patient.rpm_od || "-"}</td>
+                          <td className="px-6 py-4">{patient.rpm_og || "-"}</td>
+                        </tr>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">
+                            Tension Oculaire
+                          </td>
+                          <td className="px-6 py-4">{patient.to_od || "-"}</td>
+                          <td className="px-6 py-4">{patient.to_og || "-"}</td>
+                        </tr>
+                        <tr className="bg-white">
+                          <td className="px-6 py-4 font-medium">Cristallin</td>
+                          <td className="px-6 py-4">
+                            {patient.cristallin_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.cristallin_og || "-"}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Segment Posterieur Table */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Segment Postérieur</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative overflow-x-auto">
+                    <table className="w-full text-sm text-left">
+                      <thead className="text-xs uppercase bg-gray-50">
+                        <tr>
+                          <th className="px-6 py-3">Examen</th>
+                          <th className="px-6 py-3">OD (Œil Droit)</th>
+                          <th className="px-6 py-3">OG (Œil Gauche)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">
+                            Champs Rétiniens
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.champs_retiniens_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.champs_retiniens_og || "-"}
+                          </td>
+                        </tr>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">Vaisseaux</td>
+                          <td className="px-6 py-4">
+                            {patient.vaisseaux_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.vaisseaux_og || "-"}
+                          </td>
+                        </tr>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">Papille</td>
+                          <td className="px-6 py-4">
+                            {patient.papille_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.papille_og || "-"}
+                          </td>
+                        </tr>
+                        <tr className="bg-white border-b">
+                          <td className="px-6 py-4 font-medium">Macula</td>
+                          <td className="px-6 py-4">
+                            {patient.macula_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.macula_og || "-"}
+                          </td>
+                        </tr>
+                        <tr className="bg-white">
+                          <td className="px-6 py-4 font-medium">Vitré</td>
+                          <td className="px-6 py-4">
+                            {patient.vitre_od || "-"}
+                          </td>
+                          <td className="px-6 py-4">
+                            {patient.vitre_og || "-"}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </AccordionContent>
         </AccordionItem>
