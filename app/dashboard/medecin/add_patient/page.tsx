@@ -59,7 +59,7 @@ export default function Page() {
 
     const { data: fileUrlData } = supabase.storage
       .from("samophtalmo")
-      .getPublicUrl(data.fullPath);
+      .getPublicUrl(data.path);
 
     return { data, publicUrl: fileUrlData.publicUrl };
   }
