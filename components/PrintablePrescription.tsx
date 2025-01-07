@@ -27,18 +27,23 @@ export default function PrintablePrescription({
       } = await supabase.auth.getUser();
       if (user) {
         setUser(user);
-        // Get additional user metadata from your medecins table
-        const { data: medecinData } = await supabase
-          .from("medecins")
-          .select("*")
-          .eq("id", user.id)
-          .single();
-        setUserMetadata(medecinData);
       }
+
+      if (!user) throw new Error("User not found");
+
+      const { data: otherData } = await supabase
+        .from("medecin")
+        .select("*")
+        .eq("medecin_id", user?.id)
+        .single();
+
+      setUserMetadata(otherData);
     };
 
     getUser();
   }, []);
+
+  console.log(userMetadata);
 
   return (
     <div
@@ -48,12 +53,12 @@ export default function PrintablePrescription({
       <div className="flex justify-between items-start mb-12">
         <div>
           <h1 className="text-2xl font-bold mb-4">ORDONNANCE MEDICALE</h1>
-          {userMetadata && (
+          {user && (
             <div className="text-sm">
               <p className="font-semibold">
-                {userMetadata.role} {userMetadata.prenom} {userMetadata.nom}
+                {userMetadata.prenom} {userMetadata.nom}
               </p>
-              <p>{userMetadata.service}</p>
+              {/* <p>{user.service}</p> */}
               <p>Tel: {userMetadata.telephone}</p>
             </div>
           )}
