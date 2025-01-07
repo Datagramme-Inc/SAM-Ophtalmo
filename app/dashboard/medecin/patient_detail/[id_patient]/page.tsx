@@ -33,6 +33,8 @@ import {
 } from "@/types/entities.types";
 import { UpdateObservation } from "@/app/api/query";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import Link from "next/link";
+import { Pencil, FileText } from "lucide-react";
 
 function page({ params }: { params: { id_patient: string } }) {
   //patient state
@@ -711,6 +713,24 @@ function page({ params }: { params: { id_patient: string } }) {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+      <div className="flex space-x-4 items-center mt-6">
+        <Link href={`/dashboard/medecin/add_patient?pid=${params.id_patient}`}>
+          <Button variant="outline" size="sm">
+            <Pencil className="mr-2 h-4 w-4" />
+            Modifier
+          </Button>
+        </Link>
+        <Link
+          href={`/dashboard/medecin/prescription?patientName=${encodeURIComponent(
+            `${patient?.nom || ""} ${patient?.prenom || ""}`
+          )}`}
+        >
+          <Button variant="outline" size="sm">
+            <FileText className="mr-2 h-4 w-4" />
+            Ordonnance
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }
