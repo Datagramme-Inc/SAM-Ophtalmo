@@ -1,12 +1,12 @@
-"use client"
-import Link from 'next/link'
+"use client";
+import Link from "next/link";
 
-import { ColumnDef } from "@tanstack/react-table"
-import { Checkbox } from "@/components/ui/checkbox"
+import { ColumnDef } from "@tanstack/react-table";
+import { Checkbox } from "@/components/ui/checkbox";
 
-import { Patient } from '@/types/entities.types'
-import { DataTableColumnHeader } from "./data-table-column-header"
-
+import { Patient } from "@/types/entities.types";
+import { DataTableColumnHeader } from "./data-table-column-header";
+import { Button } from "../ui/button";
 
 export const columns: ColumnDef<Patient>[] = [
   {
@@ -37,9 +37,8 @@ export const columns: ColumnDef<Patient>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => (
-      <DataTableColumnHeader  column={column} title="id" />
+      <DataTableColumnHeader column={column} title="id" />
     ),
-
   },
   {
     accessorKey: "nom",
@@ -47,48 +46,53 @@ export const columns: ColumnDef<Patient>[] = [
       <DataTableColumnHeader column={column} title="Nom " />
     ),
   },
- 
 
   {
     accessorKey: "prenom",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Prenom " />
     ),
-    
   },
   {
     accessorKey: "adresse",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Adresse " />
     ),
-    
   },
   {
     accessorKey: "telephone",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Telephone " />
     ),
-    
   },
   {
     accessorKey: "date_enregistrement",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Date Enregistrement " />
     ),
-    
   },
   {
     id: "Detail",
     cell: ({ row }) => {
       return (
-        <Link href={`./medecin/patient_detail/${row.original.id}`}  className="flex items-center cursor-pointer" >
-          <p>Detail</p>
-       {/* <FolderSearch className="w-4 h-4" /> */}   
-        </Link>
-      )
+        <div className="flex gap-4">
+          <Link
+            href={`./medecin/patient_detail/${row.original.id}`}
+            className="flex items-center cursor-pointer"
+          >
+            <Button>Detail</Button>
+            {/* <FolderSearch className="w-4 h-4" /> */}
+          </Link>
+
+          <Link
+            href={`./medecin/add_patient?pid=${row.original.id}`}
+            className="flex items-center cursor-pointer"
+          >
+            <Button variant={"outline"}>Modifier</Button>
+            {/* <FolderSearch className="w-4 h-4" /> */}
+          </Link>
+        </div>
+      );
     },
   },
- 
-
-  
-]
+];

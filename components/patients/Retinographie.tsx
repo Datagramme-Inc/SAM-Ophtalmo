@@ -38,7 +38,7 @@ export const RetinographieForm: React.FC<RetinographieFormProps> = ({
 
   useEffect(() => {
     form.reset(initValues);
-  }, []);
+  }, [initValues, form]);
 
   return (
     <Form {...form}>

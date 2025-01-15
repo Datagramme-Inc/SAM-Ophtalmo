@@ -34,12 +34,25 @@ export const GetallAuxiliaire = async () => {
 //   return data;
 // }
 
+async function getUser() {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return user;
+}
+
 export async function getPatient(id: string) {
   const supabase = createClient();
+  const user = await getUser();
+
+  if (!user) throw new Error("Unauthorized not found");
+
   const { data, error } = await supabase
     .from("patients")
     .select("*")
     .eq("id", id);
+
   if (error) {
     throw new Error(error.message);
   }

@@ -128,7 +128,7 @@ export default function Page() {
     };
     if (!fullData.addiction) fullData.type_addiction = "";
     try {
-      console.log("je suis la");
+      console.log("je suis la(patient)");
       setError(null);
       setIsSaving(true);
       // Upload the file to Supabase
@@ -143,6 +143,7 @@ export default function Page() {
       reset();
       setStep(0);
     } catch (err: any) {
+      console.error(err);
       setError((err.message as string) || "Une erreur est survenue");
     } finally {
       setIsSaving(false);

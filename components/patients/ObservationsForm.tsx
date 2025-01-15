@@ -36,7 +36,7 @@ const ObservationsForm: React.FC<ObservationProps> = ({
 
   useEffect(() => {
     form.reset(initValues);
-  }, []);
+  }, [initValues, form]);
 
   const onSubmit = (data: ObservationsFormValues) => {
     nextFn();
