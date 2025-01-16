@@ -113,14 +113,14 @@ export default function ExamenForm({
         cornee_og: "",
         chambre_anterieur_od: "",
         chambre_anterieur_og: "",
-        rpm_od: "",
-        rpm_og: "",
+        rpm_od: undefined,
+        rpm_og: undefined
       },
       toCristallin: {
         to_od: undefined,
         to_og: undefined,
-        cristallin_od: "",
-        cristallin_og: "",
+        cristallin_od: undefined,
+        cristallin_og: undefined,
       },
       sp: {
         champs_retiniens_od: "",

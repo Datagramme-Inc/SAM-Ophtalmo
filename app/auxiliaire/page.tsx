@@ -148,7 +148,7 @@ export default function Page() {
 
   const MAX_STEPS = STEPS_INFOS.length;
 
-  async function handleSubmit() {
+ /* async function handleSubmit() {
     const fullData: PatientCompletFormValues = {
       ...identite_patient,
       ...antecedents.personnels,
@@ -183,7 +183,7 @@ export default function Page() {
     } finally {
       setIsSaving(false);
     }
-  }
+  }*/
 
   return (
     <div className="w-full container pt-16 ">
@@ -224,7 +224,7 @@ export default function Page() {
                 <Button
                   disabled={isSaving}
                   className="w-full"
-                  onClick={handleSubmit}
+                 
                 >
                   Enregistrer
                 </Button>
