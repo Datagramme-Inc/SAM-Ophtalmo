@@ -43,7 +43,7 @@ export default function PrintablePrescription({
     getUser();
   }, []);
 
-  console.log(userMetadata);
+  // console.log(userMetadata);
 
   return (
     <div
@@ -56,10 +56,10 @@ export default function PrintablePrescription({
           {user && (
             <div className="text-sm">
               <p className="font-semibold">
-                {userMetadata.prenom} {userMetadata.nom}
+                {userMetadata?.prenom || ""} {userMetadata?.nom || ""}
               </p>
               {/* <p>{user.service}</p> */}
-              <p>Tel: {userMetadata.telephone}</p>
+              <p>Tel: {userMetadata?.telephone || ""}</p>
             </div>
           )}
         </div>
@@ -97,7 +97,8 @@ export default function PrintablePrescription({
           <p className="mb-16">Signature:</p>
           {userMetadata && (
             <p className="font-semibold">
-              {userMetadata.role} {userMetadata.prenom} {userMetadata.nom}
+              {userMetadata?.role || ""} {userMetadata?.prenom || ""}{" "}
+              {userMetadata?.nom || ""}
             </p>
           )}
         </div>
