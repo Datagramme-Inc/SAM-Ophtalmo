@@ -481,24 +481,7 @@ function page({ params }: { params: { id_patient: string } }) {
                           </FormItem>
                         )}
                       />
-                      <FormField
-                        control={form.control}
-                        name="gpao"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>
-                              GPAO : traitement pour préserver votre vue
-                            </FormLabel>
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                   
                       <Button
                         type="submit"
                         variant="outline"

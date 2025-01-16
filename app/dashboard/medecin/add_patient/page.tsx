@@ -69,7 +69,7 @@ export default function Page() {
     setAntecedents,
     setConstantesTraitement,
     setConstantesTraitementD,
-    constantes_traitementD,
+   // constantes_traitementD,
     setRetinographie,
     setExamen,
     identite_patient,
@@ -249,7 +249,7 @@ export default function Page() {
       id: "retinographie",
     },
     {
-      title: "Constantes et Traitement",
+      title: "Constantes et Traitement ",
       body: (
         <ConstantesTraitementForm
           nextFn={handleNextStep}

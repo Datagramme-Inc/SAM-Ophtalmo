@@ -9,14 +9,14 @@ import Image from "next/image"
 export default function Cardstat({votant}:{votant:any}) {
   
   return ( 
-    <div className="grid my-4 w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid my-4 w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
     <Card className="py-3">
      
       <CardContent className="flex space-x-2 justify-center items-center">
       <Album className="bg-[#f0f4f8] w-9 h-9 py-2 px-2 rounded-md" strokeWidth={1.5} />
         <div className="flex flex-col ">
             <p className="font-medium text-sm"> Nouveuax Patients </p>
-            <p className="text-xl leading-6 font-bold ">15</p>
+            <p className="text-xl leading-6 font-bold ">4</p>
         </div>
       </CardContent>
     </Card>
@@ -27,23 +27,11 @@ export default function Cardstat({votant}:{votant:any}) {
      <TrendingUp className="bg-[#f0f4f8] w-9 h-9 py-2 px-2 rounded-md" strokeWidth={1.5}/>
        <div className="flex flex-col ">
            <p className="font-medium text-sm">Patients Traités</p>
-           <p className="text-xl leading-6 font-bold ">103</p>
+           <p className="text-xl leading-6 font-bold ">4</p>
        </div>
      </CardContent>
    </Card>
-   <Card className="py-3">
-     
-     <CardContent className="flex space-x-2 justify-center items-center">
-    
-    
-     <TrendingDown className="bg-[#f0f4f8] w-9 h-9 py-2 px-2 rounded-md" strokeWidth={1.5}/>
-     
-       <div className="flex flex-col ">
-           <p className="font-medium text-sm">Auxiliaires</p>
-           <p className="text-xl leading-6 font-bold ">71</p>
-       </div>
-     </CardContent>
-   </Card>
+
    <Card className="py-3">
      
      <CardContent className="flex space-x-2 justify-center items-center">
@@ -52,7 +40,7 @@ export default function Cardstat({votant}:{votant:any}) {
      </div>
        <div className="flex flex-col ">
            <p className="font-medium text-sm">Total patients</p>
-           <p className="text-xl leading-6 font-bold ">71</p>
+           <p className="text-xl leading-6 font-bold ">4</p>
        </div>
      </CardContent>
    </Card>
