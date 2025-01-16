@@ -85,7 +85,7 @@ const examenSchema = z.object({
 interface ExamenFormProps {
   nextFn: () => void;
   setFn: (data: ExamenFormValues) => void;
-  initValues?: ExamenFormValues;
+  initValues?: any;
 }
 
 export type ExamenFormValues = z.infer<typeof examenSchema>;
@@ -114,7 +114,7 @@ export default function ExamenForm({
         chambre_anterieur_od: "",
         chambre_anterieur_og: "",
         rpm_od: undefined,
-        rpm_og: undefined
+        rpm_og: undefined,
       },
       toCristallin: {
         to_od: undefined,

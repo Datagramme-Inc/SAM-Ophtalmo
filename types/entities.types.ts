@@ -188,6 +188,12 @@ export interface ExamenSP {
   vitre_og: string;
 }
 
+export type Examen = {
+  annexes: ExamenAnnexes;
+  sa: ExamenSA;
+  toCristallin: ExamenTOCristallin;
+  sp: ExamenSP;
+};
 export type PatientComplet = {} & Patient &
   AntecedentsPersonnels &
   AntecedentsFamiliaux &

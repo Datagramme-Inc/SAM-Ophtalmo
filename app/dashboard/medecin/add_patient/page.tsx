@@ -275,7 +275,7 @@ export default function Page() {
       body: (
         <ExamenForm
           nextFn={handleNextStep}
-          setFn={setExamen}
+          setFn={setExamen as any}
           initValues={examen}
         />
       ),
@@ -291,7 +291,7 @@ export default function Page() {
   const MAX_STEPS = STEPS_INFOS.length;
 
   async function handleSubmit() {
-    const fullData: PatientCompletFormValues = {
+    const fullData = {
       ...identite_patient,
       ...antecedents.personnels,
       ...antecedents.familiaux,
@@ -319,8 +319,8 @@ export default function Page() {
         }
         fullData.fichier_joint = uploadResult.publicUrl; // Assuming you want to store the file URL
       }
-      if (patientId) await updatePatient(patientId, fullData);
-      else await createPatient(fullData);
+      if (patientId) await updatePatient(patientId, fullData as any);
+      else await createPatient(fullData as any);
       reset();
       setStep(0);
     } catch (err: any) {

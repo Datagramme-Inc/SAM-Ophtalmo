@@ -161,6 +161,7 @@ type ObservationInDB = {
   observation: string | undefined;
   pas_glaucome_reevaluation: boolean;
   risque_glaucome_examens: boolean;
+  // gpao_observation: boolean;
 };
 
 export const UpdateObservation = async (
@@ -173,6 +174,7 @@ export const UpdateObservation = async (
     observation: Observation_type.observation,
     pas_glaucome_reevaluation: Observation_type.pas_glaucome_reevaluation,
     risque_glaucome_examens: Observation_type.risque_glaucome_examens,
+    // gpao_observation: Observation_type.gpao,
   };
 
   const { data, error, count } = await supabase

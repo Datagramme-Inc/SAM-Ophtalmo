@@ -481,7 +481,7 @@ function page({ params }: { params: { id_patient: string } }) {
                           </FormItem>
                         )}
                       />
-                   
+
                       <Button
                         type="submit"
                         variant="outline"

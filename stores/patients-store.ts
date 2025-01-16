@@ -6,7 +6,7 @@ import {
 import { ObservationsFormValues } from "@/types/observations.types";
 import { PatientFormValues } from "@/types/patient-identity.types";
 import { RetinographieFormValues } from "@/types/retinographie.types";
-import { Examen } from "@/types/entities.types";
+import type { Examen } from "@/types/entities.types";
 import { create } from "zustand";
 
 export type PatientStore = {
@@ -102,7 +102,7 @@ export const defaultPatient: PatientStore = {
     pas_glaucome_reevaluation: false,
     risque_glaucome_examens: false,
     observation: "",
-    gpao: false,
+    // gpao: false,
   },
   examen: {
     annexes: {
@@ -120,14 +120,14 @@ export const defaultPatient: PatientStore = {
       cornee_og: "",
       chambre_anterieur_od: "",
       chambre_anterieur_og: "",
-      rpm_od: "",
-      rpm_og: "",
+      rpm_od: "+",
+      rpm_og: "+",
     },
     toCristallin: {
       to_od: "",
       to_og: "",
-      cristallin_od: "",
-      cristallin_og: "",
+      cristallin_od: "Clair",
+      cristallin_og: "Clair",
     },
     sp: {
       champs_retiniens_od: "",

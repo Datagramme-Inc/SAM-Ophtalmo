@@ -148,8 +148,9 @@ export default function Page() {
 
   const MAX_STEPS = STEPS_INFOS.length;
 
- /* async function handleSubmit() {
-    const fullData: PatientCompletFormValues = {
+  /* async function handleSubmit() {
+    // const fullData: PatientCompletFormValues = {
+    const fullData = {
       ...identite_patient,
       ...antecedents.personnels,
       ...antecedents.familiaux,
@@ -175,7 +176,7 @@ export default function Page() {
       console.log("test");
       console.log(fullData);
       // const plainObject = { ...fullData };
-      await createPatient(fullData);
+      // await createPatient(fullData);
       reset();
       setStep(0);
     } catch (err: any) {
@@ -221,11 +222,7 @@ export default function Page() {
           {step === MAX_STEPS - 1 && (
             <CardFooter>
               <div className="flex flex-col w-full">
-                <Button
-                  disabled={isSaving}
-                  className="w-full"
-                 
-                >
+                <Button disabled={isSaving} className="w-full">
                   Enregistrer
                 </Button>
                 {error && <p className="text-red-500 text-center">{error}</p>}

@@ -2,7 +2,7 @@
 // import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { SubmitButton } from "./submit-button";
+import { SubmitButton } from "../../components/submit-button";
 
 export default function Login({
   searchParams,
@@ -13,19 +13,19 @@ export default function Login({
     "use server";
 
     const email = formData.get("email") as string;
-    let emailto=email+"@gmail.com"
+    let emailto = email + "@gmail.com";
     const password = formData.get("password") as string;
     const supabase = createClient();
 
-    const { data ,error } = await supabase.auth.signInWithPassword({
-      email:emailto,
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: emailto,
       password,
     });
 
     if (error) {
       return redirect("/login?message=Identifiants invalides");
     }
-    
+
     return redirect("/dashboard");
   };
 
@@ -54,9 +54,7 @@ export default function Login({
 
   return (
     <div className=" flex md:flex-row flex-col   h-full w-full px-8  gap-2">
-        <div className="md:w-1/2  bg-logo md:h-screen h-1/2 w-full bg-no-repeat bg-cover">
-         
-         </div>
+      <div className="md:w-1/2  bg-logo md:h-screen h-1/2 w-full bg-no-repeat bg-cover"></div>
       <form className="md:w-1/2 mt-2 h-1/2 flex flex-col md:h-full   justify-center items-center gap-2 text-foreground">
         <label className="text-md" htmlFor="Telephone">
           Telephone
@@ -97,7 +95,6 @@ export default function Login({
           </p>
         )}
       </form>
-      
     </div>
   );
 }
